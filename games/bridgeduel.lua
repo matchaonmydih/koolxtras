@@ -13,7 +13,7 @@ local lplr = Players.LocalPlayer
 
 local WindUI = loadstring(game:HttpGet('https://github.com/Footagesus/WindUI/releases/latest/download/main.lua'))()
 local Window = WindUI:CreateWindow({
-    Title = 'kool aid | Blindshot',
+    Title = 'kool aid | Bridge Duel',
     Icon = 'solar:folder-2-bold-duotone',
     Author = 'by ._stav',
     Folder = 'kool.aid',
@@ -101,21 +101,13 @@ local function downloadFile(file)
 end
 
 local Raycast = loadstring(downloadFile('koolaid/libraries/raycast.lua'))()
+local Require = loadstring(downloadFile('koolaid/libraries/require.lua'))()
 local Entity = loadstring(downloadFile('koolaid/libraries/entity.lua'))()
 
--- Combat
-do
-    local AntiHit
-    AntiHit = Tabs.Combat:Toggle({
-        Title = 'Anti Hit',
-        Desc = 'Prevents you from getting hit by enemies',
-        Callback = function(value)
-            lplr.Character.Humanoid.HipHeight = value and -2 or 1
-        end
-    })
-end
+Require.game = 'bridgeduel'
 
-do
+-- Combat
+--[[do
     local Velocity
     Velocity = Tabs.Combat:Toggle({
         Title = 'Velocity',
@@ -134,38 +126,9 @@ do
             end
         end
     })
-end
+end]]
 
 -- Player
-do
-    local AutoCash
-    AutoCash = Tabs.Player:Toggle({
-        Title = 'Auto Cash',
-        Desc = 'Automatically gives you cash within an interval of 20 seconds',
-        Callback = function(value)
-            if value then
-                if not firetouchinterest then
-                    WindUI:Notify({
-                        Title = 'Failed to enable AutoCash',
-                        Desc = 'firetouchinterest: function returned nil'
-                    })
-
-                    return AutoCash:Set(false)
-                end
-
-                repeat
-                    if firetouchinterest and Entity.isAlive(lplr) then
-                        firetouchinterest(workspace._THINGS.Obby.Trophy, lplr.Character.HumanoidRootPart, 0)
-                        firetouchinterest(workspace._THINGS.Obby.Trophy, lplr.Character.HumanoidRootPart, 1)
-                    end
-
-                    task.wait(20)
-                until not AutoCash.Value
-            end
-        end
-    })
-end
-
 do
     local Speed, SpeedSlider
     local SpeedVal = 16
@@ -189,7 +152,7 @@ do
         Title = 'Speed',
         Value = {
             Min = 1,
-            Max = 200,
+            Max = 26,
             Default = 16
         },
         Callback = function(val)
