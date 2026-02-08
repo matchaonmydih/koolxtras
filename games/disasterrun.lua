@@ -100,11 +100,11 @@ local function downloadFile(file)
     return readfile(file)
 end
 
+local Functions = loadstring(downloadFile('koolaid/libraries/functions.lua'))()
 local Raycast = loadstring(downloadFile('koolaid/libraries/raycast.lua'))()
-local Require = loadstring(downloadFile('koolaid/libraries/require.lua'))()
 local Entity = loadstring(downloadFile('koolaid/libraries/entity.lua'))()
 
-Require.game = 'disasterrun'
+Functions.game = 'disasterrun'
 
 -- Combat
 --[[do
