@@ -80,14 +80,14 @@ local function v_u_22()
     -- upvalues: (ref) v_u_12, (ref) v_u_11
     v_u_12 = v_u_12 + 1
     local v21 = v_u_11[v_u_12]
-    if not v21 then
-        error('dih')
+    if v21 == nil then
+        return error('ninja')
     end
     if typeof(v21) ~= "Instance" then
-        error((("Expected an Instance, got %* instead."):format((typeof(v21)))))
+        return error((("Expected an Instance, got %* instead."):format((typeof(v21)))))
     end
     if not v21:IsA("Team") then
-        error((("Expected an Instance of type \"Team\", got \"%*\" instead."):format(v21.ClassName)))
+        return error((("Expected an Instance of type \"Team\", got \"%*\" instead."):format(v21.ClassName)))
     end
     return v21
 end
