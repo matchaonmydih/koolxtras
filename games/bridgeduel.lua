@@ -35,20 +35,34 @@ local Dependencies = {
 
 do
 	local AutoClicker
+	local Min, Max = {Value = 8}, {Value = 12}
 	AutoClicker = Library.Tabs.Combat:CreateModule({
 		Name = 'AutoClicker',
 		Function = function(callback)
 			if callback then
 				repeat
-					local tool = Entity.tool.getTool(lplr)
-					if tool and inputService:IsMouseButtonPressed(0) then
+					local tool, random = Entity.tool.getTool(lplr), Random.new()
+					if tool and UserInputService:IsMouseButtonPressed(0) then
 						tool:Activate()
 					end
-					task.wait()
+							
+					task.wait(1 / random:NextNumber(Min.Value, Max.Value))
 				until not AutoClicker.Enabled
 			end
 		end
 	})
+	Min = AutoClicker:CreateSlider({
+        Name = 'Min',
+		Min = 1,
+		Max = 20,
+		Default = 8
+    })
+	Max = AutoClicker:CreateSlider({
+        Name = 'Max',
+		Min = 1,
+		Max = 20,
+		Default = 12
+    })
 end
 
 do
