@@ -53,7 +53,7 @@ function entity:GetClosestPlayer(range, angle, wallcheck)
 end
 
 function entity.tool.getTool(plr)
-    return plr.Character and plr.Character:FindFirstChild('Tool') or nil
+    return plr.Character and plr.Character:FindFirstChildOfClass('Tool') or nil
 end
 
 function entity.tool.getInv(plr, tool)
