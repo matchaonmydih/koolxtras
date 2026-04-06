@@ -436,7 +436,7 @@ do
 						moduleHandler:Toggle()
 					end)
 
-					if cfg[Table.Name].Toggles[tab.Name].Enabled and tab.Function then
+					if cfg[Table.Name].Toggles[tab.Name].Enabled then
 						tweenService:Create(MiniTogStroke, TweenInfo.new(0.1), {Transparency = cfg[Table.Name].Toggles[tab.Name].Enabled and 0.55 or 0.8}):Play()
 						if tab.Function then
 							task.spawn(tab.Function, self.Enabled)
@@ -539,6 +539,7 @@ do
 
 					local function updateSlider(input)
 						local X = math.clamp(((input.Position.X - SliderBck.AbsolutePosition.X) / SliderBck.AbsoluteSize.X), 0, 1)
+						local value = tab.Min + (X * (tab.Max - tab.Min))
 						moduleHandler:Set(value)
 					end
 
