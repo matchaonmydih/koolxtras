@@ -11,7 +11,7 @@ local Services = setmetatable({}, {
 local HttpService = Services.HttpService
 
 local function wipeFolders()
-    for _, v in {'koolaid', 'koolaid/libraries', 'koolaid/games'} do
+    for _, v in {'koolaid', 'koolaid/libraries', 'koolaid/games', 'koolaid/interface'} do
         if isfolder(v) then
             for x, d in listfiles(v) do
                 if string.find(d, 'commit.txt') then continue end
@@ -34,7 +34,7 @@ local function downloadFile(file)
     return readfile(file)
 end
 
-for _, v in {'koolaid', 'koolaid/libraries', 'koolaid/configs', 'koolaid/games'} do
+for _, v in {'koolaid', 'koolaid/libraries', 'koolaid/configs', 'koolaid/games', 'koolaid/interface'} do
     if not isfolder(v) then
         makefolder(v)
     end
