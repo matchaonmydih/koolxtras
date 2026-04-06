@@ -30,9 +30,8 @@ local Entity = loadstring(downloadFile('koolaid/libraries/entity.lua'))()
 do
     local AntiHit, HitConn
     AntiHit = Library.Tabs.Combat:CreateModule({
-        Title = 'Anti Hit',
-        Desc = 'Prevents you from getting hit by enemies',
-        Callback = function(value)
+        Name = 'AntiHit',
+        Function = function(value)
             if value then
                 Library.Signal:newconn(RunService.BindToRenderStep, function()
                     lplr.Character.Humanoid.HipHeight = -2
@@ -50,9 +49,8 @@ end
 do
     local Velocity
     Velocity = Library.Tabs.Combat:CreateModule({
-        Title = 'Velocity',
-        Desc = 'Prevents you from taking knockback',
-        Callback = function(value)
+        Name = 'Velocity',
+        Function = function(value)
             if value then
                 repeat
                     if Entity.isAlive(lplr) then
@@ -62,7 +60,7 @@ do
                     end
 
                     task.wait()
-                until not Velocity.Value
+                until not Velocity.Enabled
             end
         end
     })
@@ -70,43 +68,36 @@ end
 
 -- Movement
 do
-    local Speed, SpeedSlider
-    local SpeedVal = 16
-    Speed = Library.Tabs.Movement:Toggle({
-        Title = 'Speed',
-        Desc = 'Automatically adjusts how fast the player goes',
-        Callback = function(value)
+    local Speed
+	local SpeedSlider = {Value = 16}
+    Speed = Library.Tabs.Movement:CreateModule({
+        Name = 'Speed',
+        Function = function(value)
             if value then
                 repeat
                     if Entity.isAlive(lplr) then
                         local moveDir = lplr.Character.Humanoid.MoveDirection
-                        lplr.Character.HumanoidRootPart.Velocity = Vector3.new(moveDir.X * SpeedVal, lplr.Character.HumanoidRootPart.Velocity.Y, moveDir.Z * SpeedVal)
+                        lplr.Character.HumanoidRootPart.Velocity = Vector3.new(moveDir.X * SpeedSlider.Value, lplr.Character.HumanoidRootPart.Velocity.Y, moveDir.Z * SpeedSlider.Value)
                     end
 
                     task.wait()
-                until not Speed.Value
+                until not Speed.Enabled
             end
         end
     })
-    SpeedSlider = Tabs.Player:Slider({
-        Title = 'Speed',
-        Value = {
-            Min = 1,
-            Max = 200,
-            Default = 16
-        },
-        Callback = function(val)
-            SpeedVal = val
-        end
+    SpeedSlider = Speed:CreateSlider({
+        Name = 'Speed',
+		Min = 1,
+		Max = 200,
+		Default = 16
     })
 end
 
 do
     local AutoCash
-    AutoCash = Library.Tabs.World:Toggle({
-        Title = 'Auto Cash',
-        Desc = 'Automatically gives you cash within an interval of 20 seconds',
-        Callback = function(value)
+    AutoCash = Library.Tabs.World:CreateModule({
+        Name = 'AutoCash',
+        Function = function(value)
             if value then
                 if not firetouchinterest then
                     return AutoCash:Toggle(false)
@@ -119,7 +110,7 @@ do
                     end
 
                     task.wait(20)
-                until not AutoCash.Value
+                until not AutoCash.Enabled
             end
         end
     })
