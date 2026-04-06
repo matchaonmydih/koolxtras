@@ -539,6 +539,7 @@ do
 						local X = math.clamp(((input.Position.X - SliderBck.AbsolutePosition.X) / SliderBck.AbsoluteSize.X), 0, 1)
 
 						local value = tab.Min + (X * (tab.Max - tab.Min))
+						print(value)
 						moduleHandler:Set(value)
 					end
 
@@ -575,8 +576,8 @@ do
 						end
 					end)
 
-					if tab.Function then
-						task.spawn(tab.Function, moduleHandler.Value)
+					if cfg[Table.Name].Sliders[tab.Name].Value then
+						moduleHandler:Set(cfg[Table.Name].Sliders[tab.Name].Value)
 					end
 
 					return moduleHandler
