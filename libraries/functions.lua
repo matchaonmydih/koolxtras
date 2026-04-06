@@ -13,6 +13,9 @@ local module = {
 	game = (shared.place == 'bridgeduel_testing' and 'bridgeduel') or shared.place
 }
 
+print(shared.place)
+print(shared.place == 'bridgeduel_testing' and 'bridgeduel')
+
 local cloneref = cloneref or function(obj: Instance): Instance
 	return obj
 end
