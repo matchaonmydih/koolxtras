@@ -437,10 +437,10 @@ do
 					end)
 
 					if cfg[Table.Name].Toggles[tab.Name].Enabled and tab.Function then
-						cfg[Table.Name].Toggles[tab.Name].Enabled = false
-						moduleHandler.Enabled = false
-						
-						moduleHandler:Toggle()
+						tweenService:Create(MiniTogStroke, TweenInfo.new(0.1), {Transparency = self.Enabled and 0.55 or 0.8}):Play()
+						if tab.Function then
+							task.spawn(tab.Function, self.Enabled)
+						end
 					end
 
 					return moduleHandler
@@ -692,10 +692,10 @@ do
 						lib.Signal:newconn(OptionButton.MouseButton1Click, function()
 							moduleHandler:Set(v)
 						end)
+					end
 
-						if tab.Default or i == 1 then
-							moduleHandler:Set(tab.Default or i)
-						end
+					if tab.Default or tab.Options[1] then
+						moduleHandler:Set(tab.Default or tab.Options[1])
 					end
 					
 					lib.Signal:newconn(DropdownButton.MouseButton1Click, function()
@@ -710,9 +710,10 @@ do
 				end)
 
 				if cfg[Table.Name].Enabled and Table.Function then
-					cfg[Table.Name].Enabled = false
-					
-					moduleHandler:Toggle()
+					tweenService:Create(ModuleStroke, TweenInfo.new(0.1), {Transparency = self.Enabled and 0.55 or 0.8}):Play()
+					if Table.Function then
+						task.spawn(Table.Function, self.Enabled)
+					end
 				end
 				
 				local KeybindTog = Instance.new('TextButton')
