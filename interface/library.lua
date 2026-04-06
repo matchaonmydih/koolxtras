@@ -43,7 +43,7 @@ end
 local cfg = {}
 local configSys = {
 	canSave = true,
-	file = 'kool.aid/configs/'..shared.place..'.json',
+	file = 'koolaid/configs/'..shared.place..'.json',
 	Save = function(self)
 		if runService:IsStudio() then return end
 		if not self.canSave then return end
