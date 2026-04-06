@@ -33,6 +33,24 @@ local Dependencies = {
 }
 
 do
+	local AutoClicker
+	AutoClicker = Library.Tabs.Combat:CreateModule({
+		Name = 'AutoClicker',
+		Function = function(callback)
+			if callback then
+				repeat
+					local tool = getTool()
+					if tool and inputService:IsMouseButtonPressed(0) then
+						tool:Activate()
+					end
+					task.wait()
+				until not AutoClicker.Enabled
+			end
+		end
+	})
+end
+
+do
     local Speed
 	local SpeedSlider = {Value = 16}
     Speed = Library.Tabs.Movement:CreateModule({
