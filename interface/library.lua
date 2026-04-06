@@ -438,6 +438,8 @@ do
 
 					if cfg[Table.Name].Toggles[tab.Name].Enabled and tab.Function then
 						cfg[Table.Name].Toggles[tab.Name].Enabled = false
+						moduleHandler.Enabled = false
+						
 						moduleHandler:Toggle()
 					end
 
@@ -537,9 +539,6 @@ do
 
 					local function updateSlider(input)
 						local X = math.clamp(((input.Position.X - SliderBck.AbsolutePosition.X) / SliderBck.AbsoluteSize.X), 0, 1)
-
-						local value = tab.Min + (X * (tab.Max - tab.Min))
-						print(value)
 						moduleHandler:Set(value)
 					end
 
@@ -577,7 +576,17 @@ do
 					end)
 
 					if cfg[Table.Name].Sliders[tab.Name].Value then
-						moduleHandler:Set(cfg[Table.Name].Sliders[tab.Name].Value)
+						value = math.clamp(value, self.Min, self.Max)
+						if tab.Round then
+							value = math.floor(value / tab.Round) * tab.Round
+						end
+						
+						SliderFill.Size = UDim2.new((value - self.Min) / (self.Max - self.Min), 0, 1, 0)
+						SliderVal.Text = string.format('%.2f', value)
+
+						if tab.Function then
+							task.spawn(tab.Function, value)
+						end
 					end
 
 					return moduleHandler
@@ -683,6 +692,10 @@ do
 						lib.Signal:newconn(OptionButton.MouseButton1Click, function()
 							moduleHandler:Set(v)
 						end)
+
+						if tab.Default or i == 1 then
+							moduleHandler:Set(tab.Default or i)
+						end
 					end
 					
 					lib.Signal:newconn(DropdownButton.MouseButton1Click, function()
