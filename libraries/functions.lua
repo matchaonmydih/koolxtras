@@ -13,9 +13,6 @@ local module = {
 	game = (shared.place == 'bridgeduel_testing' and 'bridgeduel') or shared.place
 }
 
-print(shared.place)
-print(shared.place == 'bridgeduel_testing' and 'bridgeduel')
-
 local cloneref = cloneref or function(obj: Instance): Instance
 	return obj
 end
@@ -65,6 +62,7 @@ function module.requirejank:Test()
 end
 
 function module.requirejank.helper:Fetch(file: string): string
+	print('https://raw.githubusercontent.com/sstvskids/koolxtras/refs/heads/main/libraries/'..module.game..'/'..file..'.lua')
 	return loadstring(game:HttpGet('https://raw.githubusercontent.com/sstvskids/koolxtras/refs/heads/main/libraries/'..module.game..'/'..file..'.lua'))()
 end
 
