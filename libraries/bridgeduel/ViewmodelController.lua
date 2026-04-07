@@ -18,7 +18,8 @@ return {
 		local animObj = self:GetContainer().Viewmodel:WaitForChild(tool, 10)
 		if not animObj then return end
 
-		local anim = animObj.Animation
+		local anim = animObj:FindFirstChild('Animation')
+		if not anim then return end
 
 		if tool:find('Sword') then
 			toolnme = 'Sword'
