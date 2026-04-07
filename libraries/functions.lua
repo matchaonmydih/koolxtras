@@ -153,7 +153,7 @@ task.spawn(function()
 end)
 
 --// Main
-module.hook = hookfunction or hook_function or hookfunc or function(old, new, run_on_seperate_thread)
+module.hook = hookfunction or hook_function or hookfunc or function(old, new)
 	if debug.info(old, "s") == "[C]" then
 		local name = debug.info(old, "n")
 		
@@ -228,7 +228,28 @@ module.hook = hookfunction or hook_function or hookfunc or function(old, new, ru
 end
 
 module.hookmetamethod = hookmetamethod or function(obj, metamethod, func)
-	module.hook(old[metamethod], func)
+	local rmt = library.Metatable.get_all_L_closures(obj)
+	local mt = getmetatable(obj)
+
+	local old = rmt[metamethod]
+	local is_writable = pcall(function()
+		mt[random(math.random(128, 512))] = nil 
+	end)
+
+	if is_writable then
+		mt[method] = hook
+	else
+		local old_environment = getfenv(old)
+		local is_hookable = pcall(setfenv, old, old_environment)
+
+		if is_hookable then
+			return module.hook(old, hook)
+		else
+			warn("unable to hook a non-hookable metatable")
+		end
+	end
+
+	return old
 end
 
 -- Require
