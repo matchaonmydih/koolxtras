@@ -99,7 +99,7 @@ do
 end
 
 do
-	local Killarua
+	local Killaura
 	local Angle = {Value = 360}
 	local Range = {Value = 16}
 	local Wallcheck = {Enabled = false}
