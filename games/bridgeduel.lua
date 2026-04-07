@@ -32,7 +32,7 @@ local Entity = loadstring(downloadFile('koolaid/libraries/entity.lua'))()
 
 local Dependencies = {
     Blink = Functions.require(ReplicatedStorage.Blink.Client),
-	Detections = module.requirejank.helper:Fetch('Detections'),
+	Detections = Functions.requirejank.helper:Fetch('Detections'),
 	Entity = Functions.require(ReplicatedStorage.Modules.Entity),
 	Paths = {
 		Knockback = ReplicatedStorage.Modules.Knit.Services.CombatService.RE.KnockBackApplied
