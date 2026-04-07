@@ -72,7 +72,7 @@ end
 do
 	local AntiKB
 	AntiKB = Library.Tabs.Combat:CreateModule({
-		Name = 'AntiKB'
+		Name = 'AntiKB',
 		Function = function(callback)
 			Dependencies.Paths.Knockback.Parent = callback and nil or ReplicatedStorage.Modules.Knit.Services.CombatService.RE
 		end
