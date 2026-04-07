@@ -156,7 +156,7 @@ do
 								pcall(Library.CreateTargetHUD, Library, TargetHUD.Enabled, plr.Name, plr.Character:FindFirstChildOfClass('Humanoid'), Players:GetUserThumbnailAsync(plr.UserId, Enum.ThumbnailType.AvatarBust, Enum.ThumbnailSize.Size48x48))
 								ReplicatedStorage.Modules.Knit.Services.ToolService.RF.ToggleBlockSword:InvokeServer(AutoBlock.Enabled, tool)
 
-								if Swing.Enabled and SwingDelay < tick() then
+								--[[if Swing.Enabled and SwingDelay < tick() then
 									SwingDelay = tick() + 0.25
 									lplr.Character.Humanoid.Animator:LoadAnimation(tool.Animations.Swing):Play()
 
@@ -167,7 +167,7 @@ do
 									if setthreadidentity then
 										setthreadidentity(8)
 									end
-								end
+								end]]
 
 								local bdplr = Dependencies.Entity.FindByCharacter(plr.Character)
 								if bdplr and bdplr.Id then
