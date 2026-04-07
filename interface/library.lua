@@ -758,10 +758,6 @@ do
 						task.spawn(Table.Function, cfg[Table.Name].Enabled)
 					end
 				end
-				
-				if cfg[Table.Name].Keybind and cfg[Table.Name].Keybind ~= 'Unknown' then
-					KeybindTog.Text = cfg[Table.Name].Keybind
-				end
 
 				local KeybindTog = Instance.new('TextButton')
 				KeybindTog.AnchorPoint = Vector2.new(0.95, 0.5)
@@ -778,6 +774,10 @@ do
 				makeStroke(Enum.ApplyStrokeMode.Contextual, Color3.fromRGB(0, 0, 0), Enum.LineJoinMode.Miter, Enum.StrokeSizingMode.FixedSize, 2, 0.75, KeybindTog)
 				makeStroke(Enum.ApplyStrokeMode.Border, Color3.fromRGB(67, 0, 0), Enum.LineJoinMode.Miter, Enum.StrokeSizingMode.FixedSize, 3, 0.8, KeybindTog)
 				makeCorner(UDim.new(0, 6), KeybindTog)
+
+				if cfg[Table.Name].Keybind and cfg[Table.Name].Keybind ~= 'Unknown' then
+					KeybindTog.Text = cfg[Table.Name].Keybind
+				end
 
 				lib.Signal:newconn(KeybindTog.MouseButton1Click, function()
 					local conn
