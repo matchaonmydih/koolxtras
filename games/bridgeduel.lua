@@ -172,7 +172,7 @@ do
 										if setthreadidentity then
 											setthreadidentity(2)
 										end
-										Dependencies.Viewmodel:PlayAnimation(tool.Name)
+										pcall(Dependencies.Viewmodel.PlayAnimation, Dependencies.Viewmodel, tool.Name)
 										if setthreadidentity then
 											setthreadidentity(8)
 										end
