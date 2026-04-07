@@ -249,7 +249,7 @@ do
 	})
 end
 
-if hookmetamethod then
+if hookmetamethod then -- Credits to my pooks nothm for this function
 	do
 		local Rotations, original
 		Rotations = Library.Tabs.Combat:CreateModule({
