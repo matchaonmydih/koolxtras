@@ -1626,7 +1626,7 @@ v2.Heartbeat:Connect(function(p732)
         v_u_730()
     end
 end)
-v_u_727.OnClientEvent:Connect(function(p733, p734)
+--[[v_u_727.OnClientEvent:Connect(function(p733, p734)
     -- upvalues: (ref) v_u_9, (ref) v_u_10, (ref) v_u_11, (ref) v_u_12, (copy) v_u_19, (copy) v_u_20, (copy) v_u_22, (copy) v_u_18, (copy) v_u_39, (copy) v_u_59, (copy) v_u_73, (copy) v_u_94, (copy) v_u_105, (copy) v_u_484, (copy) v_u_516, (copy) v_u_546, (copy) v_u_563, (copy) v_u_679
     v_u_9 = 0
     v_u_10 = p733
@@ -2013,7 +2013,7 @@ v_u_727.OnClientEvent:Connect(function(p733, p734)
             end
         end
     end
-end)
+end)]]
 v_u_728.OnClientEvent:Connect(function(p882, p883)
     -- upvalues: (ref) v_u_9, (ref) v_u_10, (ref) v_u_11, (ref) v_u_12, (copy) v_u_213, (copy) v_u_19, (copy) v_u_425
     v_u_9 = 0
