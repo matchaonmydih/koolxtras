@@ -151,45 +151,47 @@ do
 						local tool = Entity.tool.getTool(lplr)
 	
 						if tool and tool:HasTag('Sword') then
-							local suc, res = pcall(function()
-								return Entity:GetClosestPlayer(Range.Value, Angle.Value, Wallcheck.Enabled)
-							end)
-
-							local plr
-							if suc and res then
-								plr = res
-							end
-												
-							if plr and Entity.isAlive(plr) then
-								pcall(Library.CreateTargetHUD, Library, TargetHUD.Enabled, plr.Name, plr.Character:FindFirstChildOfClass('Humanoid'), Players:GetUserThumbnailAsync(plr.UserId, Enum.ThumbnailType.AvatarBust, Enum.ThumbnailSize.Size48x48))
-								ReplicatedStorage.Modules.Knit.Services.ToolService.RF.ToggleBlockSword:InvokeServer(AutoBlock.Enabled, tool)
-
-								--[[if Swing.Enabled and SwingDelay < tick() then
-									SwingDelay = tick() + 0.25
-									lplr.Character.Humanoid.Animator:LoadAnimation(tool.Animations.Swing):Play()
-
-									if setthreadidentity then
-										setthreadidentity(2)
-									end
-									task.spawn(Dependencies.Viewmodel.PlayAnimation, Dependencies.Viewmodel, tool.Name)
-									if setthreadidentity then
-										setthreadidentity(8)
-									end
-								end]]
-
-								local bdplr = Dependencies.Entity.FindByCharacter(plr.Character)
-								if bdplr and bdplr.Id then
-									Dependencies.Blink.item_action.attack_entity.fire({
-										target_entity_id = bdplr.Id,
-										is_crit = (AuraCrits and true) or lplr.Character.HumanoidRootPart.AssemblyLinearVelocity.Y < 0,
-										weapon_name = tool.Name,
-										extra = {
-											rizz = 'Bro.',
-											owo = 'What\'s this? OwO ',
-											those = workspace.Name == 'Ok'
-										}
-									})
+							task.spawn(function()
+								local suc, res = pcall(function()
+									return Entity:GetClosestPlayer(Range.Value, Angle.Value, Wallcheck.Enabled)
+								end)
+	
+								local plr
+								if suc and res then
+									plr = res
 								end
+													
+								if plr and Entity.isAlive(plr) then
+									pcall(Library.CreateTargetHUD, Library, TargetHUD.Enabled, plr.Name, plr.Character:FindFirstChildOfClass('Humanoid'), Players:GetUserThumbnailAsync(plr.UserId, Enum.ThumbnailType.AvatarBust, Enum.ThumbnailSize.Size48x48))
+									ReplicatedStorage.Modules.Knit.Services.ToolService.RF.ToggleBlockSword:InvokeServer(AutoBlock.Enabled, tool)
+	
+									--[[if Swing.Enabled and SwingDelay < tick() then
+										SwingDelay = tick() + 0.25
+										lplr.Character.Humanoid.Animator:LoadAnimation(tool.Animations.Swing):Play()
+	
+										if setthreadidentity then
+											setthreadidentity(2)
+										end
+										task.spawn(Dependencies.Viewmodel.PlayAnimation, Dependencies.Viewmodel, tool.Name)
+										if setthreadidentity then
+											setthreadidentity(8)
+										end
+									end]]
+	
+									local bdplr = Dependencies.Entity.FindByCharacter(plr.Character)
+									if bdplr and bdplr.Id then
+										Dependencies.Blink.item_action.attack_entity.fire({
+											target_entity_id = bdplr.Id,
+											is_crit = (AuraCrits and true) or lplr.Character.HumanoidRootPart.AssemblyLinearVelocity.Y < 0,
+											weapon_name = tool.Name,
+											extra = {
+												rizz = 'Bro.',
+												owo = 'What\'s this? OwO ',
+												those = workspace.Name == 'Ok'
+											}
+										})
+									end
+								end)
 							else
 								Library:CreateTargetHUD(false)
 
