@@ -180,7 +180,7 @@ do
 	
 									local bdplr = Dependencies.Entity.FindByCharacter(plr.Character)
 									if bdplr and bdplr.Id then
-										Dependencies.Blink.item_action.attack_entity.fire({
+										task.spawn(Dependencies.Blink.item_action.attack_entity.fire, {
 											target_entity_id = bdplr.Id,
 											is_crit = (AuraCrits and true) or lplr.Character.HumanoidRootPart.AssemblyLinearVelocity.Y < 0,
 											weapon_name = tool.Name,
@@ -191,17 +191,17 @@ do
 											}
 										})
 									end
-								end)
-							else
-								Library:CreateTargetHUD(false)
-
-								if Entity.isAlive(lplr) then
-									local tool = Entity.tool.getTool(lplr)
-									if tool and tool:HasTag('Sword') then
-										ReplicatedStorage.Modules.Knit.Services.ToolService.RF.ToggleBlockSword:InvokeServer(false, tool)
+								else
+									Library:CreateTargetHUD(false)
+	
+									if Entity.isAlive(lplr) then
+										local tool = Entity.tool.getTool(lplr)
+										if tool and tool:HasTag('Sword') then
+											ReplicatedStorage.Modules.Knit.Services.ToolService.RF.ToggleBlockSword:InvokeServer(false, tool)
+										end
 									end
 								end
-							end
+							end)
 						end
 					end
 				until not Killaura.Enabled
