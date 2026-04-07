@@ -148,14 +148,11 @@ do
 					task.wait(0.1)
 										
 					if Entity.isAlive(lplr) then
-						print('goon')
 						local tool = Entity.tool.getTool(lplr)
 	
 						if tool and tool:HasTag('Sword') then
-							print('test')
 							local plr = Entity:GetClosestPlayer(Range.Value, Angle.Value, Wallcheck.Enabled)
 							if plr and Entity.isAlive(plr) then
-								print('hi')
 								pcall(Library.CreateTargetHUD, Library, TargetHUD.Enabled, plr.Name, plr.Character:FindFirstChildOfClass('Humanoid'), Players:GetUserThumbnailAsync(plr.UserId, Enum.ThumbnailType.AvatarBust, Enum.ThumbnailSize.Size48x48))
 								ReplicatedStorage.Modules.Knit.Services.ToolService.RF.ToggleBlockSword:InvokeServer(AutoBlock.Enabled, tool)
 
@@ -166,7 +163,7 @@ do
 									if setthreadidentity then
 										setthreadidentity(2)
 									end
-									Dependencies.Viewmodel:PlayAnimation(tool.Name)
+									task.spawn(Dependencies.Viewmodel.PlayAnimation, Dependencies.Viewmodel, tool.Name)
 									if setthreadidentity then
 										setthreadidentity(8)
 									end
@@ -174,7 +171,6 @@ do
 
 								local bdplr = Dependencies.Entity.FindByCharacter(plr.Character)
 								if bdplr and bdplr.Id then
-									print('fire')
 									Dependencies.Blink.item_action.attack_entity.fire({
 										target_entity_id = bdplr.Id,
 										is_crit = (AuraCrits and true) or lplr.Character.HumanoidRootPart.AssemblyLinearVelocity.Y < 0,
