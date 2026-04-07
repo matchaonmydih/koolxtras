@@ -934,7 +934,7 @@ do
 	function lib:Notify(text, duration)
 		if activeNotif then
 			local SlideOut = tweenService:Create(activeNotif, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {
-				Position = UDim2.fromScale(1.5, 0.8)
+				Position = UDim2.fromScale(1.5, 0.85)
 			})
 			
 			SlideOut:Play()
@@ -946,11 +946,11 @@ do
 		end
 		
 		local Notification = Instance.new('Frame')
-		Notification.AnchorPoint = Vector2.new(1, 0.8)
+		Notification.AnchorPoint = Vector2.new(1, 0.85)
 		Notification.AutomaticSize = Enum.AutomaticSize.X
 		Notification.BackgroundColor3 = Color3.fromRGB(204, 86, 86)
 		Notification.BorderSizePixel = 0
-		Notification.Position = UDim2.new(1.5, 0, 0.8, 0)
+		Notification.Position = UDim2.new(1.5, 0, 0.85, 0)
 		Notification.Size = UDim2.fromOffset(0, 80)
 		Notification.Parent = VisualFrame
 		makeStroke(Enum.ApplyStrokeMode.Border, Color3.fromRGB(255, 0, 0), Enum.LineJoinMode.Miter, Enum.StrokeSizingMode.FixedSize, 3, 0.7, Notification)
@@ -1007,7 +1007,7 @@ do
 		BarFill.Parent = BarBack
 
 		tweenService:Create(Notification, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {
-			Position = UDim2.fromScale(1, 0.8)
+			Position = UDim2.fromScale(1, 0.85)
 		}):Play()
 		
 		tweenService:Create(BarFill, TweenInfo.new(duration or 3, Enum.EasingStyle.Linear), {
@@ -1016,7 +1016,7 @@ do
 		
 		task.delay(duration or 3, function()
 			local SlideOut = tweenService:Create(Notification, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {
-				Position = UDim2.fromScale(1.5, 0.8)
+				Position = UDim2.fromScale(1.5, 0.85)
 			})
 
 			SlideOut:Play()
