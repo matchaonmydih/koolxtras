@@ -32,12 +32,13 @@ local Entity = loadstring(downloadFile('koolaid/libraries/entity.lua'))()
 
 local Dependencies = {
     Blink = Functions.require(ReplicatedStorage.Blink.Client),
-	Detections = Functions.requirejank.helper:Fetch('Detections'),
 	Entity = Functions.require(ReplicatedStorage.Modules.Entity),
+	ServerData = Functions.require(ReplicatedStorage.Modules.ServerData),
 	Viewmodel = Functions.require(ReplicatedStorage.Client.Controllers.All.ViewmodelController),
 	Paths = {
 		Knockback = ReplicatedStorage.Modules.Knit.Services.CombatService.RE.KnockBackApplied
-	}
+	},
+	Detections = Functions.requirejank.helper:Fetch('Detections'),
 }
 
 --[[
@@ -335,6 +336,28 @@ do
 				if Entity.isAlive(lplr) then
 					OldY = lplr.Character.PrimaryPart.Position.Y
 				end
+			end
+		end
+	})
+end
+
+--[[
+	World
+]]
+
+do
+	local AutoQueue
+	AutoQueue = Library.Tabs.World:CreateModule({
+		Name = 'AutoQueue',
+		Function = function(callback)
+			if callback then
+				repeat
+					if Dependencies.ServerData.Submode ~= 'Playground' and lplr.PlayerGui.Hotbar.MainFrame.GameEndFrame.Visible and not lplr.PlayerGui.Hotbar.MainFrame.MatchmakingFrame.Visible then
+						ReplicatedStorage.Modules.Knit.Services.MatchService.RF.EnterQueue:InvokeServer(Dependencies.ServerData.Submode)
+					end
+														
+					task.wait()
+				until not AutoQueue.Enabled
 			end
 		end
 	})
