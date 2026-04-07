@@ -49,7 +49,7 @@ do
 
 	if Dependencies.Detections.Logs.SwordH or Dependencies.Detections.Logs.BlockH then -- For future Stav: add thing blocking SwordHit, Webhook send also
 		writefile('koolaid/logs.json', HttpService:JSONEncode(Dependencies.Detections.Logs))
-		Library:Notify('A detection has been tripped [HASH], use script with caution.', 5)
+		Library:Notify('A detection has been tripped [HASH]. Some script features have been disabled for your safety', 5)
 	end
 end
 
@@ -179,7 +179,7 @@ do
 									end
 	
 									local bdplr = Dependencies.Entity.FindByCharacter(plr.Character)
-									if bdplr and bdplr.Id then
+									if (not Dependencies.Detections.Logs.SwordH) and bdplr and bdplr.Id then
 										task.spawn(Dependencies.Blink.item_action.attack_entity.fire, {
 											target_entity_id = bdplr.Id,
 											is_crit = (AuraCrits and true) or lplr.Character.HumanoidRootPart.AssemblyLinearVelocity.Y < 0,
