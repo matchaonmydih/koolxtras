@@ -134,4 +134,4 @@ do
 	})
 end
 
-Library:notify('Loaded successfully! Press RShift to close the GUI', 6)
+Library:Notify('Loaded successfully! Press RShift to close the GUI', 6)
