@@ -34,3 +34,4 @@ local Entity = {
 }
 
 Entity.LocalEntity = Entity.FindByPlayer(lplr)
+return Entity
