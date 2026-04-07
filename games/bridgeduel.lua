@@ -132,8 +132,9 @@ do
 	})
 end
 
+local EntityCFrame
+local Killaura, Flight = {Enabled = false}, {Enabled = false}
 do
-	local Killaura
 	local AutoBlock = {Enabled = true}
 	local Angle = {Value = 360}
 	local Range = {Value = 16}
@@ -162,6 +163,7 @@ do
 								end
 													
 								if plr and Entity.isAlive(plr) then
+									EntityCFrame = CFrame.lookAt(lplr.Character.PrimaryPart.Position, Vector3.new(plr.Character.PrimaryPart.Position.X, lplr.Character.PrimaryPart.Position.Y, plr.PrimaryPart.Position.Z))
 									pcall(Library.CreateTargetHUD, Library, TargetHUD.Enabled, plr.Name, plr.Character:FindFirstChildOfClass('Humanoid'), Players:GetUserThumbnailAsync(plr.UserId, Enum.ThumbnailType.AvatarBust, Enum.ThumbnailSize.Size48x48))
 									ReplicatedStorage.Modules.Knit.Services.ToolService.RF.ToggleBlockSword:InvokeServer(AutoBlock.Enabled, tool)
 	
@@ -192,6 +194,7 @@ do
 										})
 									end
 								else
+									EntityCFrame = nil
 									Library:CreateTargetHUD(false)
 	
 									if Entity.isAlive(lplr) then
@@ -205,6 +208,16 @@ do
 						end
 					end
 				until not Killaura.Enabled
+			else
+				EntityCFrame = nil
+				Library:CreateTargetHUD(false)
+		
+				if Entity.isAlive(lplr) then
+					local tool = Entity.tool.getTool(lplr)
+					if tool and tool:HasTag('Sword') then
+						ReplicatedStorage.Modules.Knit.Services.ToolService.RF.ToggleBlockSword:InvokeServer(false, tool)
+					end
+				end
 			end
 		end
 	})
@@ -233,6 +246,33 @@ do
 	Swing = Killaura:CreateToggle({
 		Name = 'Swing',
 		Enabled = true
+	})
+end
+
+do
+	local Rotations, original
+	Rotations = Library.Tabs.Combat:CreateModule({
+		Name = 'Rotations',
+		Function = function(callback)
+			if callback then
+				original = Functions.hookmetamethod(game, '__newindex', function(self, key, val)
+					if self == lplr.Character.PrimaryPart and key == 'CFrame' then
+						if not Flight.Enabled then
+							if Killaura.Enabled and EntityCFrame then
+								return original(self, key, EntityCFrame)
+							end
+						end
+					end
+
+					return original(self, key, val)
+				end)
+			else
+				if original then
+					Functions.hookmetamethod(game, '__newindex', original)
+					original = nil
+				end
+			end
+		end
 	})
 end
 
@@ -267,7 +307,7 @@ do
 end
 
 do
-	local Flight, OldY, NewY
+	local OldY, NewY
 	Flight = Library.Tabs.Movement:CreateModule({
 		Name = 'Flight',
 		Function = function(callback)
