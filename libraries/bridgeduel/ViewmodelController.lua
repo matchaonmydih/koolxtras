@@ -23,15 +23,12 @@ return {
     
         local track = animObj.AnimationController.Animator:LoadAnimation(anim)
         track.Name = 'ToolAnimation'
-        
-        track.Stopped:Connect(function()
-            v:Destroy()
-        end)
     
         for _, v in animObj.AnimationController.Animator:GetPlayingAnimationTracks() do
 			if v.Name == 'ToolAnimation' and (tool:find('Sword') or tool:find('Pickaxe')) then
 				v.TimePosition = 0
 				v:Stop()
+				v:Destroy()
 			end
 		end
 		
