@@ -98,6 +98,39 @@ do
 	})
 end
 
+local AuraCrits
+do
+	local Criticals, original
+	Criticals = Library.Tabs.Combat:CreateModule({
+		Name = 'Criticals',
+		Function = function(callback)
+			if callback then
+				if not Functions.requirejank.properRequire then
+					AuraCrits = true
+					return
+				end
+
+				original = Functions.hook(Dependencies.Blink.item_action.attack_entity.fire, function(...)
+					local args = ...
+					if type(args) == 'table' then 
+						rawset(args, 'is_crit', true)
+					end
+										
+					return original(...)
+				end)
+			else
+				if not hookfunction or not Functions.requirejank.properRequire then
+					AuraCrits = false
+					return
+				end
+
+				Functions.hook(Dependencies.Blink.item_action.attack_entity.fire, original)
+				original = nil
+			end
+		end
+	})
+end
+
 do
 	local Killaura
 	local Angle = {Value = 360}
