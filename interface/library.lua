@@ -747,7 +747,7 @@ do
 				lib.Signal:newconn(ModuleButton.MouseButton1Click, function()
 					moduleHandler:Toggle()
 				end)
-				
+
 				lib.Signal:newconn(ModuleButton.MouseButton2Click, function()
 					OptionsFrame.Visible = not OptionsFrame.Visible
 				end)
@@ -757,6 +757,10 @@ do
 					if Table.Function then
 						task.spawn(Table.Function, cfg[Table.Name].Enabled)
 					end
+				end
+				
+				if cfg[Table.Name].Keybind and cfg[Table.Name].Keybind ~= 'Unknown' then
+					KeybindTog.Text = cfg[Table.Name].Keybind
 				end
 
 				local KeybindTog = Instance.new('TextButton')
