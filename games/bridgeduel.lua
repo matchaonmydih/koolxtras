@@ -166,7 +166,7 @@ do
 									if setthreadidentity then
 										setthreadidentity(2)
 									end
-									Dependencies.ViewmodelController:PlayAnimation(tool.Name)
+									Dependencies.Viewmodel:PlayAnimation(tool.Name)
 									if setthreadidentity then
 										setthreadidentity(8)
 									end
