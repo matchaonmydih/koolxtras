@@ -74,7 +74,11 @@ do
 	AntiKB = Library.Tabs.Combat:CreateModule({
 		Name = 'AntiKB',
 		Function = function(callback)
-			Dependencies.Paths.Knockback.Parent = callback and nil or ReplicatedStorage.Modules.Knit.Services.CombatService.RE
+			if callback then
+				Dependencies.Paths.Knockback.Parent = nil
+			else
+				Dependencies.Paths.Knockback.Parent = ReplicatedStorage.Modules.Knit.Services.CombatService.RE
+			end
 		end
 	})
 end
