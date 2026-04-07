@@ -40,7 +40,7 @@ local Dependencies = {
 }
 
 do
-	Detections:test('hash')
+	Dependencies.Detections:test('hash')
 
 	if Detections.Logs['SwordH'] or Detections.Logs['BlockH'] then
 		writefile('koolaid/logs.json', HttpService:JSONEncode(Detections.Logs))
