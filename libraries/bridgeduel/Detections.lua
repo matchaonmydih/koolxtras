@@ -41,7 +41,7 @@ local function getscripthash(path: Instance)
 	local bytecode = getscriptbytecode(path)
 	if not bytecode then return nil end
 
-	return Crypt.sha384(bytecode)
+	return Crypt.sha384(bytecode):upper()
 end
 
 function Detections:test(typee)
