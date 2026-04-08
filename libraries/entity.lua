@@ -57,6 +57,10 @@ function entity.tool.getTool(plr)
 end
 
 function entity.tool.hasTool(plr, tool)
+    print(plr)
+    print(tool)
+
+    print(plr.Character:FindFirstChild(tool))
     return plr.Character and plr.Character:FindFirstChild(tool) or nil
 end
 
