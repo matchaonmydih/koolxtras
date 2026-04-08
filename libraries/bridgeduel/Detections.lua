@@ -46,15 +46,14 @@ end
 
 function Detections:test(typee)
 	if typee == 'hash' and getscripthash then
-		setclipboard(getscripthash(Detections.Paths.Client.Sword))
-		if getscripthash(Detections.Paths.Client.Sword) ~= '16D1A471E2AF4F32DA974993CF13D7ACA4EB8BB15B3C7C31E494F02DB0D323A3' then
+		if getscripthash(Detections.Paths.Client.Sword) ~= '3A02ACDE20E4CAD9918CBD4206D510B59C438ABBFB682AB1EC8606FD984D30EC5D1D0430E988E812F71BCAA0004C8458' then
 	        Detections.Count += 1
-			Detections.Logs.SwordH = 'SwordClient hash was not the same (Dev\'s changed the hash -- report this to kool aid devs)'
+			Detections.Logs.SwordH = 'SwordClient hash was not the same (Dev\'s potentially changed hash -- report to kool aid devs)'
 	    end
 
-		if getscripthash(Detections.Paths.Client.Block) ~= '0A18604C086353174AC08ED5922985BC5CB111675EE654B8A67D77EA9700B8E6' then
+		if getscripthash(Detections.Paths.Client.Block) ~= 'DA04A5C02AF37ED9D2C6485CCFADEE2C1CDE6E035E2E3BCB2DD2F527886768F18EF3E5CF52A342924DBADEBFD1A9117E' then
 	        Detections.Count += 1
-			Detections.Logs.BlockH = 'BlockPlacementController Hash was not the same (Dev\'s changed the hash -- report this to kool aid devs)'
+			Detections.Logs.BlockH = 'BlockPlacementController Hash was not the same (Dev\'s potentially changed hash -- report to kool aid devs)'
 	    end
 	end
 end
