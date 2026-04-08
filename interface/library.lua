@@ -956,7 +956,7 @@ do
 		
 		SlideOut:Play()
 		SlideOut.Completed:Connect(function()
-			notif:Destroy()
+			guiObj:Destroy()
 			
 			for i,v in activeNotifs do
 				local targetY = 0.85 - ((i - 1) * (90 / workspace.CurrentCamera.ViewportSize.Y))
