@@ -202,9 +202,13 @@ do
     								Library:CreateTargetHUD(false)
     							end
                             end)
-						end)
+						else
+						    Library:CreateTargetHUD(false)
+						end
 					end
 				until not Killaura.Enabled
+			else
+			    Library:CreateTargetHUD(false)
 			end
 		end
 	})
