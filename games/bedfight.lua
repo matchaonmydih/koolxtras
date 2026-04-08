@@ -54,7 +54,7 @@ local Dependencies = {
 
 ]]
 
-function entity:GetClosestPlayer(range, angle, wallcheck)
+function Entity:GetClosestPlayer(range, angle, wallcheck)
     local minrnge, entity = range, nil
 
 	for i,v in Players:GetPlayers() do
