@@ -951,14 +951,15 @@ do
 		end
 
 		local SlideOut = tweenService:Create(guiObj, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {
-			Position = UDim2.new(1.5, 0, notif.Position.Y.Scale, 0)
+			Position = UDim2.new(1.5, 0, guiObj.Position.Y.Scale, 0)
 		})
+		
 		SlideOut:Play()
 		SlideOut.Completed:Connect(function()
 			notif:Destroy()
 			
 			for i,v in activeNotifs do
-				local targetY = 0.85 - ((i - 1) * (95 / workspace.CurrentCamera.ViewportSize.Y))
+				local targetY = 0.85 - ((i - 1) * (85 / workspace.CurrentCamera.ViewportSize.Y))
 				tweenService:Create(v, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {
 					Position = UDim2.fromScale(1, targetY)
 				}):Play()
