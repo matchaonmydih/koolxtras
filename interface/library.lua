@@ -255,7 +255,7 @@ do
 			guiObj:Destroy()
 
 			for i,v in activeNotifs do
-				local targetY = 0.85 - ((i - 1) * (90 / workspace.CurrentCamera.ViewportSize.Y))
+				local targetY = 0.82 - ((i - 1) * (90 / workspace.CurrentCamera.ViewportSize.Y))
 				tweenService:Create(v, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {
 					Position = UDim2.new(1, 0, targetY, (i - 1) * -5)
 				}):Play()
@@ -269,11 +269,11 @@ do
 		end
 
 		local Notification = Instance.new('Frame')
-		Notification.AnchorPoint = Vector2.new(1, 0.85)
+		Notification.AnchorPoint = Vector2.new(1, 0.82)
 		Notification.AutomaticSize = Enum.AutomaticSize.X
 		Notification.BackgroundColor3 = Color3.fromRGB(204, 86, 86)
 		Notification.BorderSizePixel = 0
-		Notification.Position = UDim2.new(1.5, 0, 0.85, 0)
+		Notification.Position = UDim2.new(1.5, 0, 0.82, 0)
 		Notification.Size = UDim2.fromOffset(0, 80)
 		Notification.Parent = VisualFrame
 		makeStroke(Enum.ApplyStrokeMode.Border, Color3.fromRGB(255, 0, 0), Enum.LineJoinMode.Miter, Enum.StrokeSizingMode.FixedSize, 3, 0.7, Notification)
@@ -331,7 +331,7 @@ do
 
 		table.insert(activeNotifs, 1, Notification)
 		for i,v in activeNotifs do
-			local targetY = 0.85 - ((i - 1) * (90 / workspace.CurrentCamera.ViewportSize.Y))
+			local targetY = 0.82 - ((i - 1) * (90 / workspace.CurrentCamera.ViewportSize.Y))
 			tweenService:Create(v, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {
 				Position = UDim2.new(1, 0, targetY, (i - 1) * -5)
 			}):Play()
