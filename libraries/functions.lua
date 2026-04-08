@@ -31,13 +31,20 @@ local Quartz = loadstring(game:HttpGetAsync("https://github.com/notpoiu/Quartz/r
 
 local Tester = Quartz.new({
     Timeout = 5,
-    AllowFFlagPolyfills = true -- Allow polyfills that use fflags, can disable if you don't want to get detected by roblox's fflag detections, default is true.
+    AllowFFlagPolyfills = false
 })
 
 local Results = Tester:Test('require')
 Tester:PatchEnvironment()
 
-do
+module.hook = hookfunction or function(a, b)
+	a = b
+end
+
+module.hookmetamethod = hookmetamethod or function()
+end
+
+--[[do
 	type userdata = {}
 	type _function = (...any) -> (...any)
 	
@@ -262,7 +269,7 @@ do
 	
 		return old
 	end
-end
+end]]
 
 function module.requirejank.helper:Fetch(file: string): string
 	return loadstring(game:HttpGet('https://raw.githubusercontent.com/sstvskids/koolxtras/'..readfile('koolaid/commit.txt')..'/libraries/'..module.game..'/'..file..'.lua'))()
