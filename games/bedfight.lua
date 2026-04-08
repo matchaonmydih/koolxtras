@@ -235,3 +235,61 @@ do
 		Enabled = true
 	})
 end
+
+do
+    local Speed
+	local SpeedSlider = {Value = 16}
+    Speed = Library.Tabs.Movement:CreateModule({
+        Name = 'Speed',
+        Function = function(callback)
+            if callback then
+                repeat
+                    if Entity.isAlive(lplr) then
+                        local moveDir = lplr.Character.Humanoid.MoveDirection
+                        lplr.Character.HumanoidRootPart.Velocity = Vector3.new(moveDir.X * SpeedSlider.Value, lplr.Character.HumanoidRootPart.Velocity.Y, moveDir.Z * SpeedSlider.Value)
+                    end
+
+                    task.wait()
+                until not Speed.Enabled
+            end
+        end
+    })
+    SpeedSlider = Speed:CreateSlider({
+        Name = 'Speed',
+		Min = 1,
+		Max = 32,
+		Default = 16
+    })
+end
+
+do
+	local OldY, NewY
+	Flight = Library.Tabs.Movement:CreateModule({
+		Name = 'Flight',
+		Function = function(callback)
+			if callback then
+				NewY = 0
+				OldY = lplr.Character.PrimaryPart.Position.Y
+
+				repeat
+					if Entity.isAlive(lplr) then
+                        lplr.Character.PrimaryPart.CFrame = CFrame.new(lplr.Character.PrimaryPart.Position.X, OldY + NewY, lplr.Character.PrimaryPart.Position.Z) * lplr.Character.PrimaryPart.CFrame.Rotation
+
+						if UserInputService:IsKeyDown('Space') and not UserInputService:GetFocusedTextBox() then
+                            NewY += 0.8
+                        elseif UserInputService:IsKeyDown('LeftShift') and not UserInputService:GetFocusedTextBox() then
+                            NewY -= 0.8
+                        end
+					end
+
+					task.wait()
+				until not Flight.Enabled
+			else
+				NewY = 0
+				if Entity.isAlive(lplr) then
+					OldY = lplr.Character.PrimaryPart.Position.Y
+				end
+			end
+		end
+	})
+end
