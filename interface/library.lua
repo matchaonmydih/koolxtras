@@ -331,7 +331,7 @@ do
 
 		table.insert(activeNotifs, 1, Notification)
 		for i,v in activeNotifs do
-			local targetY = 0.83 - ((i - 1) * (90 / workspace.CurrentCamera.ViewportSize.Y))
+			local targetY = 0.8 - ((i - 1) * (90 / workspace.CurrentCamera.ViewportSize.Y))
 			tweenService:Create(v, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {
 				Position = UDim2.new(1, 0, targetY, (i - 1) * -5)
 			}):Play()
