@@ -281,7 +281,7 @@ module.require = function(moduleScript: Instance): Instance
 	end)
 
 	if suc and res ~= nil then
-		return res
+		return pcall(res)
 	end
 
 	return module.requirejank.helper:Fetch(moduleScript.Parent.Name == 'Blink' and 'Blink' or moduleScript.Name)
