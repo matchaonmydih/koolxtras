@@ -225,6 +225,13 @@ do
 	makeStroke(Enum.ApplyStrokeMode.Contextual, Color3.fromRGB(0,0,0), Enum.LineJoinMode.Miter, Enum.StrokeSizingMode.FixedSize, 2, 0.75, PlrRank)
 end
 
+-- Visual
+local VisualFrame = Instance.new('Frame')
+VisualFrame.BackgroundTransparency = 1
+VisualFrame.BorderSizePixel = 0
+VisualFrame.Size = UDim2.fromScale(1, 1)
+VisualFrame.Parent = ScreenGUI
+
 --[[
 
     Notifications
@@ -946,13 +953,6 @@ do
 		return Tabs[name]
 	end
 end
-
--- Visual
-local VisualFrame = Instance.new('Frame')
-VisualFrame.BackgroundTransparency = 1
-VisualFrame.BorderSizePixel = 0
-VisualFrame.Size = UDim2.fromScale(1, 1)
-VisualFrame.Parent = ScreenGUI
 
 --[[
 
