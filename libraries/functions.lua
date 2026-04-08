@@ -34,7 +34,7 @@ local Tester = Quartz.new({
     AllowFFlagPolyfills = true -- Allow polyfills that use fflags, can disable if you don't want to get detected by roblox's fflag detections, default is true.
 })
 
-local Results = Tester:Test({"require", "hookfunction", "hookmetamethod"})
+local Results = Tester:Test({"require", "hookfunction", "hookmetamethod", "decompile"})
 
 do
 	type userdata = {}
@@ -264,13 +264,20 @@ do
 end
 
 function module.requirejank.helper:Fetch(file: string): string
-	print('fetching')
 	return loadstring(game:HttpGet('https://raw.githubusercontent.com/sstvskids/koolxtras/'..readfile('koolaid/commit.txt')..'/libraries/'..module.game..'/'..file..'.lua'))()
 end
 
 module.require = function(moduleScript: Instance): Instance
 	local require = Tester:GetFunction("require")
-	return require(moduleScript) or module.requirejank.helper:Fetch(moduleScript.Parent.Name == 'Blink' and 'Blink' or moduleScript.Name)
+	
+	local suc, res = pcall(function()
+		return require(moduleScript)
+	end)
+	if suc and res ~= nil then
+		return res
+	end
+
+	return module.requirejank.helper:Fetch(moduleScript.Parent.Name == 'Blink' and 'Blink' or moduleScript.Name)
 end
 
 return module
