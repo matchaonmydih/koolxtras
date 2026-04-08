@@ -41,7 +41,7 @@ local Dependencies = {
         Viewmodel = Functions.require(ReplicatedStorage.Client.Controllers.All.ViewmodelController),
     },
     Constants = {
-        Ranks = Functions.require(ReplicatedStorage.Modules.Ranks)
+        Ranks = Functions.require(ReplicatedStorage.Constants.Ranks)
     },
 	Paths = {
 		Knockback = ReplicatedStorage.Modules.Knit.Services.CombatService.RE.KnockBackApplied
