@@ -270,7 +270,7 @@ function module.requirejank:Test()
 end
 
 function module.requirejank.helper:Fetch(file: string): string
-	return loadstring(game:HttpGet('https://raw.githubusercontent.com/sstvskids/koolxtras/refs/heads/main/libraries/'..module.game..'/'..file..'.lua'))()
+	return loadstring(game:HttpGet('https://raw.githubusercontent.com/sstvskids/koolxtras/'..readfile('koolaid/commit.txt')..'/main/libraries/'..module.game..'/'..file..'.lua'))()
 end
 
 module.require = function(moduleScript: Instance): Instance
