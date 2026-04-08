@@ -131,7 +131,7 @@ do
 
                 AntiKBConn = Dependencies.Modules.VeloUtils.ChildAdded:Connect(function(obj)
                     if obj.ClassName == 'LinearVelocity' then
-                        v.MaxForce = 0
+                        obj.MaxForce = 0
                     end
                 end)
             else
@@ -142,7 +142,7 @@ do
 
 				for i,v in Dependencies.Modules.VeloUtils:GetChildren() do
                     if v.ClassName == 'LinearVelocity' then
-                        v.MaxForce = 20000
+                        obj.MaxForce = 20000
                     end
 
                     continue
