@@ -943,19 +943,32 @@ do
 end
 
 do
-	local activeNotif
-	function lib:Notify(text, duration)
-		if activeNotif then
-			local SlideOut = tweenService:Create(activeNotif, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {
-				Position = UDim2.fromScale(1.5, 0.85)
-			})
+	local activeNotifs = {}
+	local function removeNotification(guiObj)
+		local ind = table.find(activeNotifs, guiObj)
+		if ind then
+			table.remove(activeNotifs, guiObj)
+		end
 
-			SlideOut:Play()
-			SlideOut.Completed:Connect(function()
-				activeNotif:Destroy()
-				activeNotif = nil
-				SlideOut = nil
-			end)
+		local SlideOut = tweenService:Create(notif, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {
+			Position = UDim2.new(1.5, 0, notif.Position.Y.Scale, 0)
+		})
+		SlideOut:Play()
+		SlideOut.Completed:Connect(function()
+			notif:Destroy()
+			
+			for i,v in activeNotifs do
+				local targetY = 0.85 - ((i - 1) * (90 / workspace.CurrentCamera.ViewportSize.Y))
+				tweenService:Create(notif, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {
+					Position = UDim2.fromScale(1, targetY)
+				}):Play()
+			end
+		end)
+	end
+	
+	function lib:Notify(text, duration)
+		if #activeNotifs >= 6 then
+			removeNotification(activeNotifs[#activeNotifs])
 		end
 
 		local Notification = Instance.new('Frame')
@@ -1019,25 +1032,22 @@ do
 		BarFill.Size = UDim2.new(1, 0, 1, 0)
 		BarFill.Parent = BarBack
 
-		tweenService:Create(Notification, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {
-			Position = UDim2.fromScale(1, 0.85)
-		}):Play()
+		table.insert(activeNotifs, 1, Notification)
+		for i,v in activeNotifs do
+			local targetY = 0.85 - ((i - 1) * (90 / workspace.CurrentCamera.ViewportSize.Y))
+			tweenService:Create(notif, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {
+				Position = UDim2.fromScale(1, targetY)
+			}):Play()
+		end
 
 		tweenService:Create(BarFill, TweenInfo.new(duration or 3, Enum.EasingStyle.Linear), {
 			Size = UDim2.new(0, 0, 1, 0)
 		}):Play()
 
 		task.delay(duration or 3, function()
-			local SlideOut = tweenService:Create(Notification, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {
-				Position = UDim2.fromScale(1.5, 0.85)
-			})
-
-			SlideOut:Play()
-			SlideOut.Completed:Connect(function()
-				Notification:Destroy()
-				activeNotif = nil
-				SlideOut = nil
-			end)
+			if table.find(activeNotifs, Notification) then
+				removeNotification(Notification)
+			end
 		end)
 	end
 end
