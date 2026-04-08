@@ -54,6 +54,8 @@ for i,v in ids do
             return error('Failed to download file: '..debug.traceback(res))
         elseif res then
 			shared.place = i
+
+			loadstring(downloadFile('koolaid/interface/library.lua'))()
             return loadstring(res)()
         end
     end
