@@ -381,7 +381,4 @@ do
 	})
 end
 
-if Dependencies.Detections.Logs.SwordH then
-	task.wait(5)
-end
 Library:Notify('Loaded successfully! Press RShift to close the GUI', 6)
