@@ -25,13 +25,18 @@ local function wipeFolders()
 end
 
 local function downloadFile(file)
-    url = file:gsub('koolaid/', '')
-    if not isfile(file) then
-        writefile(file, game:HttpGet('https://raw.githubusercontent.com/sstvskids/koolxtras/'..readfile('koolaid/commit.txt')..'/'..url))
-    end
+	local suc, res = pcall(function()
+	    url = file:gsub('koolaid/', '')
+	    if not isfile(file) then
+	        writefile(file, game:HttpGet('https://raw.githubusercontent.com/sstvskids/koolxtras/'..readfile('koolaid/commit.txt')..'/'..url))
+	    end
+	
+	    repeat task.wait() until isfile(file)
+	    return readfile(file)
+	end)
 
-    repeat task.wait() until isfile(file)
-    return readfile(file)
+	print(suc, not suc and debug.traceback(res))
+	return res
 end
 
 for _, v in {'koolaid', 'koolaid/libraries', 'koolaid/configs', 'koolaid/games', 'koolaid/interface'} do
