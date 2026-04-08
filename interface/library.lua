@@ -1,10 +1,10 @@
 --[[
-	
+
 	- [ stav.lua ] -
 	kool aid rewrite
-	
+
 	CREATED: [ 16/03 ] (2026)
-	
+
 ]]
 if not shared.place then shared.place = game.PlaceId end
 
@@ -227,6 +227,123 @@ end
 
 --[[
 
+    Notifications
+
+]]
+
+do
+	local activeNotifs = {}
+	local function removeNotification(guiObj)
+		local ind = table.find(activeNotifs, guiObj)
+		if ind then
+			table.remove(activeNotifs, ind)
+		end
+
+		local SlideOut = tweenService:Create(guiObj, TweenInfo.new(0.3, Enum.EasingStyle.Quint, Enum.EasingDirection.In), {
+			Position = UDim2.new(1.5, 0, guiObj.Position.Y.Scale, guiObj.Position.Y.Offset)
+		})
+
+		SlideOut:Play()
+		SlideOut.Completed:Connect(function()
+			guiObj:Destroy()
+
+			for i,v in activeNotifs do
+				local targetY = 0.85 - ((i - 1) * (90 / workspace.CurrentCamera.ViewportSize.Y))
+				tweenService:Create(v, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {
+					Position = UDim2.new(1, 0, targetY, (i - 1) * -5)
+				}):Play()
+			end
+		end)
+	end
+
+	function lib:Notify(text, duration)
+		if #activeNotifs >= 6 then
+			removeNotification(activeNotifs[#activeNotifs])
+		end
+
+		local Notification = Instance.new('Frame')
+		Notification.AnchorPoint = Vector2.new(1, 0.85)
+		Notification.AutomaticSize = Enum.AutomaticSize.X
+		Notification.BackgroundColor3 = Color3.fromRGB(204, 86, 86)
+		Notification.BorderSizePixel = 0
+		Notification.Position = UDim2.new(1.5, 0, 0.85, 0)
+		Notification.Size = UDim2.fromOffset(0, 80)
+		Notification.Parent = VisualFrame
+		makeStroke(Enum.ApplyStrokeMode.Border, Color3.fromRGB(255, 0, 0), Enum.LineJoinMode.Miter, Enum.StrokeSizingMode.FixedSize, 3, 0.7, Notification)
+		makePadding(UDim.new(0, 0), UDim.new(0, 9), UDim.new(0, 9), UDim.new(0, 2), Notification)
+
+		activeNotif = Notification
+		local NotificationLayout = Instance.new('UIListLayout')
+		NotificationLayout.SortOrder = Enum.SortOrder.LayoutOrder
+		NotificationLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
+		NotificationLayout.VerticalAlignment = Enum.VerticalAlignment.Top
+		NotificationLayout.Parent = Notification
+
+		local Title = Instance.new('TextLabel')
+		Title.AutomaticSize = Enum.AutomaticSize.X
+		Title.BackgroundTransparency = 1
+		Title.BorderSizePixel = 0
+		Title.Size = UDim2.fromOffset(0, 30)
+		Title.FontFace = Font.fromName('Montserrat', Enum.FontWeight.SemiBold)
+		Title.Text = 'kool.aid'
+		Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+		Title.TextSize = 18
+		Title.TextXAlignment = Enum.TextXAlignment.Left
+		Title.Parent = Notification
+		makeStroke(Enum.ApplyStrokeMode.Contextual, Color3.fromRGB(0,0,0), Enum.LineJoinMode.Miter, Enum.StrokeSizingMode.FixedSize, 2, 0.75, Title)
+
+		local Description = Instance.new('TextLabel')
+		Description.AutomaticSize = Enum.AutomaticSize.X
+		Description.BackgroundTransparency = 1
+		Description.BorderSizePixel = 0
+		Description.Size = UDim2.fromOffset(0, 30)
+		Description.FontFace = Font.fromName('Montserrat')
+		Description.Text = text
+		Description.TextColor3 = Color3.fromRGB(255, 255, 255)
+		Description.TextSize = 20
+		Description.TextXAlignment = Enum.TextXAlignment.Left
+		Description.TextYAlignment = Enum.TextYAlignment.Top
+		Description.Parent = Notification
+		makeStroke(Enum.ApplyStrokeMode.Contextual, Color3.fromRGB(0,0,0), Enum.LineJoinMode.Miter, Enum.StrokeSizingMode.FixedSize, 2, 0.75, Description)
+
+		local BarBack = Instance.new('Frame')
+		BarBack.BackgroundColor3 = Color3.fromRGB(127, 44, 41)
+		BarBack.BorderSizePixel = 0
+		BarBack.Size = UDim2.new(1, 0, 0, 10)
+		BarBack.Position = UDim2.new(0, 0, 1, -10)
+		BarBack.AnchorPoint = Vector2.new(0, 1)
+		BarBack.Parent = Notification
+
+		local BarFill = Instance.new('Frame')
+		BarFill.AnchorPoint = Vector2.new(1, 0)
+		BarFill.BackgroundColor3 = Color3.fromRGB(241, 83, 77)
+		BarFill.BorderSizePixel = 0
+		BarFill.Position = UDim2.fromScale(1, 0)
+		BarFill.Size = UDim2.new(1, 0, 1, 0)
+		BarFill.Parent = BarBack
+
+		table.insert(activeNotifs, 1, Notification)
+		for i,v in activeNotifs do
+			local targetY = 0.85 - ((i - 1) * (90 / workspace.CurrentCamera.ViewportSize.Y))
+			tweenService:Create(v, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {
+				Position = UDim2.new(1, 0, targetY, (i - 1) * -5)
+			}):Play()
+		end
+
+		tweenService:Create(BarFill, TweenInfo.new(duration or 3, Enum.EasingStyle.Linear), {
+			Size = UDim2.new(0, 0, 1, 0)
+		}):Play()
+
+		task.delay(duration or 3, function()
+			if table.find(activeNotifs, Notification) then
+				removeNotification(Notification)
+			end
+		end)
+	end
+end
+
+--[[
+
 	Tabs
 
 ]]
@@ -399,6 +516,7 @@ do
 						cfg[Table.Name].Enabled = not cfg[Table.Name].Enabled
 
 						tweenService:Create(ModuleStroke, TweenInfo.new(0.1), {Transparency = self.Enabled and 0.55 or 0.8}):Play()
+						lib:Notify(Table.Name..' has been 'self.Enabled and 'enabled!' or 'disabled!', 2)
 						if Table.Function then
 							task.spawn(Table.Function, self.Enabled)
 						end
@@ -839,7 +957,7 @@ VisualFrame.Parent = ScreenGUI
 --[[
 
 	Target HUD
-	
+
 ]]
 
 do
@@ -910,7 +1028,7 @@ do
 	PlrHealthPercentage.Parent = TargetHUDContainer
 	makeStroke(Enum.ApplyStrokeMode.Contextual, Color3.fromRGB(0,0,0), Enum.LineJoinMode.Miter, Enum.StrokeSizingMode.FixedSize, 2, 0.75, PlrHealthPercentage)
 
-	function lib:CreateTargetHUD(visibility, plrnme, humanoid, thumbnail)		
+	function lib:CreateTargetHUD(visibility, plrnme, humanoid, thumbnail)
 		TargetHUDFContainer.Visible = visibility
 
 		if plrnme and humanoid then
@@ -939,117 +1057,6 @@ do
 
 		ScreenGUI:Destroy()
 		lib = nil
-	end
-end
-
-do
-	local activeNotifs = {}
-	local function removeNotification(guiObj)
-		local ind = table.find(activeNotifs, guiObj)
-		if ind then
-			table.remove(activeNotifs, ind)
-		end
-
-		local SlideOut = tweenService:Create(guiObj, TweenInfo.new(0.3, Enum.EasingStyle.Quint, Enum.EasingDirection.In), {
-			Position = UDim2.new(1.5, 0, guiObj.Position.Y.Scale, guiObj.Position.Y.Offset)
-		})
-		
-		SlideOut:Play()
-		SlideOut.Completed:Connect(function()
-			guiObj:Destroy()
-			
-			for i,v in activeNotifs do
-				local targetY = 0.85 - ((i - 1) * (90 / workspace.CurrentCamera.ViewportSize.Y))
-				tweenService:Create(v, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {
-					Position = UDim2.new(1, 0, targetY, (i - 1) * -5)
-				}):Play()
-			end
-		end)
-	end
-	
-	function lib:Notify(text, duration)
-		if #activeNotifs >= 6 then
-			removeNotification(activeNotifs[#activeNotifs])
-		end
-
-		local Notification = Instance.new('Frame')
-		Notification.AnchorPoint = Vector2.new(1, 0.85)
-		Notification.AutomaticSize = Enum.AutomaticSize.X
-		Notification.BackgroundColor3 = Color3.fromRGB(204, 86, 86)
-		Notification.BorderSizePixel = 0
-		Notification.Position = UDim2.new(1.5, 0, 0.85, 0)
-		Notification.Size = UDim2.fromOffset(0, 80)
-		Notification.Parent = VisualFrame
-		makeStroke(Enum.ApplyStrokeMode.Border, Color3.fromRGB(255, 0, 0), Enum.LineJoinMode.Miter, Enum.StrokeSizingMode.FixedSize, 3, 0.7, Notification)
-		makePadding(UDim.new(0, 0), UDim.new(0, 9), UDim.new(0, 9), UDim.new(0, 2), Notification)
-
-		activeNotif = Notification
-		local NotificationLayout = Instance.new('UIListLayout')
-		NotificationLayout.SortOrder = Enum.SortOrder.LayoutOrder
-		NotificationLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
-		NotificationLayout.VerticalAlignment = Enum.VerticalAlignment.Top
-		NotificationLayout.Parent = Notification
-
-		local Title = Instance.new('TextLabel')
-		Title.AutomaticSize = Enum.AutomaticSize.X
-		Title.BackgroundTransparency = 1
-		Title.BorderSizePixel = 0
-		Title.Size = UDim2.fromOffset(0, 30)
-		Title.FontFace = Font.fromName('Montserrat', Enum.FontWeight.SemiBold)
-		Title.Text = 'kool.aid'
-		Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-		Title.TextSize = 18
-		Title.TextXAlignment = Enum.TextXAlignment.Left
-		Title.Parent = Notification
-		makeStroke(Enum.ApplyStrokeMode.Contextual, Color3.fromRGB(0,0,0), Enum.LineJoinMode.Miter, Enum.StrokeSizingMode.FixedSize, 2, 0.75, Title)
-
-		local Description = Instance.new('TextLabel')
-		Description.AutomaticSize = Enum.AutomaticSize.X
-		Description.BackgroundTransparency = 1
-		Description.BorderSizePixel = 0
-		Description.Size = UDim2.fromOffset(0, 30)
-		Description.FontFace = Font.fromName('Montserrat')
-		Description.Text = text
-		Description.TextColor3 = Color3.fromRGB(255, 255, 255)
-		Description.TextSize = 20
-		Description.TextXAlignment = Enum.TextXAlignment.Left
-		Description.TextYAlignment = Enum.TextYAlignment.Top
-		Description.Parent = Notification
-		makeStroke(Enum.ApplyStrokeMode.Contextual, Color3.fromRGB(0,0,0), Enum.LineJoinMode.Miter, Enum.StrokeSizingMode.FixedSize, 2, 0.75, Description)
-
-		local BarBack = Instance.new('Frame')
-		BarBack.BackgroundColor3 = Color3.fromRGB(127, 44, 41)
-		BarBack.BorderSizePixel = 0
-		BarBack.Size = UDim2.new(1, 0, 0, 10)
-		BarBack.Position = UDim2.new(0, 0, 1, -10)
-		BarBack.AnchorPoint = Vector2.new(0, 1)
-		BarBack.Parent = Notification
-
-		local BarFill = Instance.new('Frame')
-		BarFill.AnchorPoint = Vector2.new(1, 0)
-		BarFill.BackgroundColor3 = Color3.fromRGB(241, 83, 77)
-		BarFill.BorderSizePixel = 0
-		BarFill.Position = UDim2.fromScale(1, 0)
-		BarFill.Size = UDim2.new(1, 0, 1, 0)
-		BarFill.Parent = BarBack
-
-		table.insert(activeNotifs, 1, Notification)
-		for i,v in activeNotifs do
-			local targetY = 0.85 - ((i - 1) * (90 / workspace.CurrentCamera.ViewportSize.Y))
-			tweenService:Create(v, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {
-				Position = UDim2.new(1, 0, targetY, (i - 1) * -5)
-			}):Play()
-		end
-
-		tweenService:Create(BarFill, TweenInfo.new(duration or 3, Enum.EasingStyle.Linear), {
-			Size = UDim2.new(0, 0, 1, 0)
-		}):Play()
-
-		task.delay(duration or 3, function()
-			if table.find(activeNotifs, Notification) then
-				removeNotification(Notification)
-			end
-		end)
 	end
 end
 
