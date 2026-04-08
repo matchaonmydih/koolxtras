@@ -191,7 +191,7 @@ do
 
     									pcall(Dependencies.Controllers.Viewmodel.PlayAnimation, Dependencies.Controllers.Viewmodel, 'Melee', 'Swing')
     									if not lplr.Character.Humanoid:FindFirstChild('Swing1') then
-    									    Dependencies.Handlers.Tools.Sword.Sounds.Default.Swing1:Clone().Parent = lplr.Character.Humanoid
+    									    Dependencies.Handlers.Tools.Sword.Sounds.Default.Swing1:Clone().Parent = lplr.Character.HumanoidRootPart
     									end
 
     									lplr.Character.HumanoidRootPart:WaitForChild('Swing1'):Play()
