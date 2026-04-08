@@ -48,14 +48,21 @@ end
 
 for i,v in ids do
     if table.find(v, game.PlaceId) then
+		loadstring(downloadFile('koolaid/interface/library.lua'))()
         local suc, res = pcall(downloadFile, 'koolaid/games/'..i..'.lua')
 
         if not suc then
             return error('Failed to download file: '..debug.traceback(res))
         elseif res then
 			shared.place = i
-
-			loadstring(downloadFile('koolaid/interface/library.lua'))()
+			shared.Library.Signal:newconn(lplr.OnTeleport:Connect(function()
+				local teleportScript = [[
+					return loadstring(game:HttpGet('https://raw.githubusercontent.com/sstvskids/koolxtras/refs/heads/main/init.lua'))()
+				]]
+			
+				shared.Library:Save()
+				queue_on_teleport(teleportScript)
+			end))
             return loadstring(res)()
         end
     end
