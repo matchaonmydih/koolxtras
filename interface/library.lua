@@ -8,7 +8,7 @@
 ]]
 if not shared.place then shared.place = game.PlaceId end
 if shared.Library then
-    return shared.Library:Uninject()
+    shared.Library:Uninject()
 end
 
 local lib = {
