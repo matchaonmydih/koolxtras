@@ -16,6 +16,8 @@ local ids = {
 	bridgeduel = {139566161526375}
 }
 
+local queue_on_teleport = queue_on_teleport or (syn and syn.queue_on_teleport) or queueonteleport
+
 local function downloadFile(file)
     url = file:gsub('koolaid/', '')
     if not isfile(file) then
@@ -51,7 +53,7 @@ for i,v in ids do
 				local teleportScript = [[
 					return loadstring(game:HttpGet('https://raw.githubusercontent.com/sstvskids/koolxtras/refs/heads/main/init.lua'))()
 				]]
-			
+
 				shared.Library:Save()
 				queue_on_teleport(teleportScript)
 			end)
