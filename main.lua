@@ -51,6 +51,7 @@ for i,v in ids do
 			shared.place = i
 			shared.Library.Signal:newconn(lplr.OnTeleport, function()
 				local teleportScript = [[
+				    print('teleporting')
 					return loadstring(game:HttpGet('https://raw.githubusercontent.com/sstvskids/koolxtras/refs/heads/main/init.lua'))()
 				]]
 
