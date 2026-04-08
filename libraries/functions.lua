@@ -287,6 +287,7 @@ module.require = function(moduleScript: Instance): Instance
 	end)
 	
 	if suc and res ~= nil then
+		print(suc, res)
 		return res
 	end
 
@@ -306,11 +307,8 @@ do
 	    local data = HttpService:JSONDecode(res.Body)
 	    for i,v in data.headers do
 			print(i, v)
-	        if string.match(i, 'Xeno') then
+	        if string.find(i, 'Xeno') then
 				xenoPste = true
-	            module.require = function(moduleScript: Instance): Instance
-					return module.requirejank.helper:Fetch(moduleScript.Parent.Name == 'Blink' and 'Blink' or moduleScript.Name)
-				end
 	        end
 	    end
 	end
