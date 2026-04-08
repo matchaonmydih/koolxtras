@@ -523,7 +523,7 @@ do
 						cfg[Table.Name].Enabled = not cfg[Table.Name].Enabled
 
 						tweenService:Create(ModuleStroke, TweenInfo.new(0.1), {Transparency = self.Enabled and 0.55 or 0.8}):Play()
-						lib:Notify(Table.Name..' has been 'self.Enabled and 'enabled!' or 'disabled!', 2)
+						lib:Notify(Table.Name..' has been '..(cfg[Table.Name].Enabled and 'enabled!' or 'disabled!'), 2)
 						if Table.Function then
 							task.spawn(Table.Function, self.Enabled)
 						end
