@@ -182,6 +182,7 @@ do
 									end
 	
 									local bdplr = Dependencies.Entity.FindByCharacter(plr.Character)
+									print(bdplr)
 									if (not Dependencies.Detections.Logs.SwordH) and bdplr and bdplr.Id then
 										task.spawn(Dependencies.Blink.item_action.attack_entity.fire, {
 											target_entity_id = bdplr.Id,
