@@ -27,6 +27,15 @@ local Services = setmetatable({}, {
 local Players = Services.Players
 local lplr = Players.LocalPlayer
 
+local Quartz = loadstring(game:HttpGetAsync("https://github.com/notpoiu/Quartz/releases/latest/download/Quartz.luau"))()
+
+local Tester = Quartz.new({
+    Timeout = 5,
+    AllowFFlagPolyfills = true -- Allow polyfills that use fflags, can disable if you don't want to get detected by roblox's fflag detections, default is true.
+})
+
+local Results = Tester:Test({"require", "hookfunction", "hookmetamethod"})
+
 do
 	type userdata = {}
 	type _function = (...any) -> (...any)
@@ -154,7 +163,7 @@ do
 	end)
 	
 	--// Main
-	module.hook = hookfunction or hook_function or hookfunc or function(old, new)
+	module.hook = Results['hookfunction'] and hookfunction or function(old, new)
 		if debug.info(old, "s") == "[C]" then
 			local name = debug.info(old, "n")
 			
@@ -228,7 +237,7 @@ do
 		end
 	end
 	
-	module.hookmetamethod = hookmetamethod or function(obj, metamethod, func)
+	module.hookmetamethod = Results['hookmetamethod'] and hookmetamethod or function(obj, metamethod, func)
 		local rmt = Metatable.get_all_L_closures(obj)
 		local mt = getmetatable(obj)
 	
@@ -254,30 +263,13 @@ do
 	end
 end
 
--- Require
-function module.requirejank:Test()
-	if not require then return false end
-
-	local suc, res = pcall(function()
-		return require(lplr.PlayerScripts.PlayerModule).controls
-	end)
-
-	if ({identifyexecutor()})[1] == 'Xeno' then
-		self.properRequire = false
-		return false
-	end
-
-	self.properRequire = suc and true or false
-	return suc and true or false
-end
-
 function module.requirejank.helper:Fetch(file: string): string
 	return loadstring(game:HttpGet('https://raw.githubusercontent.com/sstvskids/koolxtras/'..readfile('koolaid/commit.txt')..'/libraries/'..module.game..'/'..file..'.lua'))()
 end
 
 module.require = function(moduleScript: Instance): Instance
-	return module.requirejank.properRequire and require(moduleScript) or module.requirejank.helper:Fetch(moduleScript.Parent.Name == 'Blink' and 'Blink' or moduleScript.Name)
+	local require = Tester:GetFunction("require")
+	return require(moduleScript) or module.requirejank.helper:Fetch(moduleScript.Parent.Name == 'Blink' and 'Blink' or moduleScript.Name)
 end
 
-module.requirejank:Test()
 return module
