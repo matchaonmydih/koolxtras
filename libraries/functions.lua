@@ -258,27 +258,8 @@ do
 	end
 end
 
-local xenoPaste = false
-do
-	local res = request({
-	    Url = 'https://httpbin.org/get',
-	    Method = 'GET',
-	    Headers = {
-	        ['Content-Type'] = 'application/json'
-	    }
-	})
-	
-	if res.Success then
-	    local data = HttpService:JSONDecode(res.Body)
-	    for i,v in data.headers do
-	        if string.match(i, 'Xeno-Fingerprint') then
-	             xenoPaste = true
-	        end
-	    end
-	end
-end
-
 -- Require
+local xenoPste
 function module.requirejank:Test()
 	if not require then return false end
 
@@ -286,7 +267,7 @@ function module.requirejank:Test()
 		return require(lplr.PlayerScripts.PlayerModule).controls
 	end)
 
-	if ({identifyexecutor()})[1] == 'Xeno' then
+	if xenoPste then
 		self.properRequire = false
 		return false
 	end
@@ -301,17 +282,37 @@ function module.requirejank.helper:Fetch(file: string): string
 end
 
 module.require = function(moduleScript: Instance): Instance
-	if not xenoPaste then
-		local suc, res = pcall(function()
-			return cloneref(require(moduleScript))
-		end)
+	local suc, res = pcall(function()
+		return cloneref(require(moduleScript))
+	end)
 	
-		if suc and res ~= nil then
-			return res
-		end
+	if suc and res ~= nil then
+		return res
 	end
 
 	return module.requirejank.helper:Fetch(moduleScript.Parent.Name == 'Blink' and 'Blink' or moduleScript.Name)
+end
+
+do
+	local res = request({
+	    Url = 'https://httpbin.org/get',
+	    Method = 'GET',
+	    Headers = {
+	        ['Content-Type'] = 'application/json'
+	    }
+	})
+	
+	if res.Success then
+	    local data = HttpService:JSONDecode(res.Body)
+	    for i,v in data.headers do
+	        if string.match(i, 'Xeno-Fingerprint') then
+				xenoPste = true
+	            module.require = function(moduleScript: Instance): Instance
+					return module.requirejank.helper:Fetch(moduleScript.Parent.Name == 'Blink' and 'Blink' or moduleScript.Name)
+				end
+	        end
+	    end
+	end
 end
 
 module.requirejank:Test()
