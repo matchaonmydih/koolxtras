@@ -255,13 +255,19 @@ function module.requirejank.helper:Fetch(file: string): string
 	return loadstring(game:HttpGet('https://raw.githubusercontent.com/sstvskids/koolxtras/'..readfile('koolaid/commit.txt')..'/libraries/'..module.game..'/'..file..'.lua'))()
 end
 
-local Quartz = loadstring(game:HttpGetAsync("https://github.com/notpoiu/Quartz/releases/latest/download/Quartz.luau"))():new({
-	Timeout = 5,
-	AllowFFlagPolyfills = false
-})
+local suc, res = pcall(function()
+	return loadstring(game:HttpGetAsync("https://github.com/notpoiu/Quartz/releases/latest/download/Quartz.luau"))():new({
+		Timeout = 5,
+		AllowFFlagPolyfills = false
+	})
+end)
+
+if suc and res ~= nil then
+	Quartz = res
+end
 
 module.require = function(moduleScript: Instance): Instance
-	Quartz:GetFunction("require")
+	local fixedrequire = Quartz:GetFunction("require")
 	
 	local suc, res = pcall(function()
 		return fixedrequire(moduleScript)
