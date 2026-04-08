@@ -5,6 +5,7 @@
     SQLanguage: https://devforum.roblox.com/u/SQLanguage
 
 ]]
+repeat task.wait() until shared.Library ~= nil
 
 local module = {
 	requirejank = {
@@ -270,7 +271,7 @@ function module.requirejank:Test()
 end
 
 function module.requirejank.helper:Fetch(file: string): string
-	print('Fetching support file: '..file)
+	shared.Library:Notify('Fetching support file: '..file, 3)
 	return loadstring(game:HttpGet('https://raw.githubusercontent.com/sstvskids/koolxtras/'..readfile('koolaid/commit.txt')..'/libraries/'..module.game..'/'..file..'.lua'))()
 end
 
