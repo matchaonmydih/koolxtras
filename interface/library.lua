@@ -1144,4 +1144,5 @@ lib.Tabs.Misc:CreateModule({
 })
 ]]
 
+shared.Library = lib
 return lib
