@@ -951,7 +951,7 @@ do
 		end
 
 		local SlideOut = tweenService:Create(guiObj, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {
-			Position = UDim2.new(1.5, 0, guiObj.Position.Y.Scale, guiObj.Position.Y.Offset)
+			Position = UDim2.new(2, 0, guiObj.Position.Y.Scale, guiObj.Position.Y.Offset)
 		})
 		
 		SlideOut:Play()
