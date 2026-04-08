@@ -194,7 +194,7 @@ do
     									    Dependencies.Handlers.Tools.Sword.Sounds.Default.Swing1:Clone().Parent = lplr.Character.Humanoid
     									end
 
-    									lplr.Character.Humanoid:WaitForChild('Swing1'):Play()
+    									lplr.Character.HumanoidRootPart:WaitForChild('Swing1'):Play()
     								end
 
     								task.spawn(Dependencies.Remotes.AttackPlayer.FireServer, Dependencies.Remotes.AttackPlayer, tool.Name, plr.Character)
