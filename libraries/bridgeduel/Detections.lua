@@ -22,8 +22,8 @@ local Detections = {
     Count = 0
 }
 
-function Detections:test(type)
-	if type == 'hash' and getscripthash then
+function Detections:test(typee)
+	if typee == 'hash' and getscripthash then
 		if getscripthash(Detections.Paths.Client.Sword) ~= '16D1A471E2AF4F32DA974993CF13D7ACA4EB8BB15B3C7C31E494F02DB0D323A3' then
 	        Count += 1
 			Logs.SwordH = 'SwordClient hash was not the same (Dev\'s changed the hash -- report this to kool aid devs)'
