@@ -283,7 +283,7 @@ end
 
 module.require = function(moduleScript: Instance): Instance
 	local suc, res = pcall(function()
-		return cloneref(require(moduleScript))
+		return require(moduleScript)
 	end)
 	
 	if suc and res ~= nil then
