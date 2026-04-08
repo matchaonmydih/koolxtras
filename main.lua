@@ -55,7 +55,7 @@ for i,v in ids do
             return error('Failed to download file: '..debug.traceback(res))
         elseif res then
 			shared.place = i
-			shared.Library.Signal:newconn(lplr.OnTeleport:Connect(function()
+			shared.Library.Signal:newconn(lplr.OnTeleport, function()
 				local teleportScript = [[
 					return loadstring(game:HttpGet('https://raw.githubusercontent.com/sstvskids/koolxtras/refs/heads/main/init.lua'))()
 				]]
