@@ -178,30 +178,30 @@ do
 							plr = res
 						end
 
-						task.spawn(function()
-						    if plr and Entity.isAlive(plr) then
-			                    local tool = getTool('Melee')
+						if plr and Entity.isAlive(plr) then
+                            local tool = getTool('Melee')
 
-								if tool then
-								    EntityCFrame = CFrame.lookAt(lplr.Character.PrimaryPart.Position, Vector3.new(plr.Character.PrimaryPart.Position.X, lplr.Character.PrimaryPart.Position.Y, plr.Character.PrimaryPart.Position.Z))
-									pcall(Library.CreateTargetHUD, Library, TargetHUD.Enabled, plr.Name, plr.Character:FindFirstChildOfClass('Humanoid'), Players:GetUserThumbnailAsync(plr.UserId, Enum.ThumbnailType.AvatarBust, Enum.ThumbnailSize.Size48x48))
+                            task.spawn(function()
+							if tool then
+                                EntityCFrame = CFrame.lookAt(lplr.Character.PrimaryPart.Position, Vector3.new(plr.Character.PrimaryPart.Position.X, lplr.Character.PrimaryPart.Position.Y, plr.Character.PrimaryPart.Position.Z))
+								pcall(Library.CreateTargetHUD, Library, TargetHUD.Enabled, plr.Name, plr.Character:FindFirstChildOfClass('Humanoid'), Players:GetUserThumbnailAsync(plr.UserId, Enum.ThumbnailType.AvatarBust, Enum.ThumbnailSize.Size48x48))
 
-									if Swing.Enabled and SwingDelay < tick() then
-									    SwingDelay = tick() + 0.2
+								if Swing.Enabled and SwingDelay < tick() then
+                                    SwingDelay = tick() + 0.2
 
-										pcall(Dependencies.Controllers.Viewmodel.PlayAnimation, Dependencies.Controllers.Viewmodel, 'Melee', 'Swing')
-										if not lplr.Character.Humanoid:FindFirstChild('Swing1') then
-										    Dependencies.Handlers.Tools.Sword.Sounds.Default.Swing1:Clone().Parent = lplr.Character.Humanoid
-										end
-
-										lplr.Character.Humanoid:WaitForChild('Swing1'):Play()
+									pcall(Dependencies.Controllers.Viewmodel.PlayAnimation, Dependencies.Controllers.Viewmodel, 'Melee', 'Swing')
+									if not lplr.Character.Humanoid:FindFirstChild('Swing1') then
+									    Dependencies.Handlers.Tools.Sword.Sounds.Default.Swing1:Clone().Parent = lplr.Character.Humanoid
 									end
 
-									task.spawn(Dependencies.Remotes.AttackPlayer.FireServer, Dependencies.Remotes.AttackPlayer, tool.Name, plr.Character)
-								else
-								    Library:CreateTargetHUD(false)
+									lplr.Character.Humanoid:WaitForChild('Swing1'):Play()
 								end
+
+								task.spawn(Dependencies.Remotes.AttackPlayer.FireServer, Dependencies.Remotes.AttackPlayer, tool.Name, plr.Character)
+							else
+								Library:CreateTargetHUD(false)
 							end
+                            end)
 						end)
 					end
 				until not Killaura.Enabled
