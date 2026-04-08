@@ -54,7 +54,7 @@ for i,v in ids do
 			
 				shared.Library:Save()
 				queue_on_teleport(teleportScript)
-			end))
+			end)
             return loadstring(res)()
         end
     end
