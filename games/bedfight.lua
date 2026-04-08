@@ -66,7 +66,7 @@ local Dependencies = {
     },
     Remotes = {
         EquipTool = ReplicatedStorage.Remotes.ItemsRemotes.EquipTool,
-        AttackPlayer = ReplicatedStorage.Remotes.ItemRemotes.SwordHit
+        AttackPlayer = ReplicatedStorage.Remotes.ItemsRemotes.SwordHit
     },
     Classes = {
         Melee = {},
