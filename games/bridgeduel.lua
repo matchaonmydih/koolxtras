@@ -406,7 +406,7 @@ do
 		Function = function(callback)
 			if callback then
 				repeat
-					if Dependencies.Modules.ServerData.Submode ~= 'Playground' and lplr.PlayerGui.Hotbar.MainFrame.GameEndFrame.Visible and not lplr.PlayerGui.Hotbar.MainFrame.MatchmakingFrame.Visible then
+					if Dependencies.Modules.ServerData.Submode ~= 'Playground' and lplr.PlayerGui.Hotbar.MainFrame.GameEndFrame.Visible == true and lplr.PlayerGui.Hotbar.MainFrame.MatchmakingFrame.Visible == false then
 						ReplicatedStorage.Modules.Knit.Services.MatchService.RF.EnterQueue:InvokeServer(Dependencies.Modules.ServerData.Submode)
 					end
 
