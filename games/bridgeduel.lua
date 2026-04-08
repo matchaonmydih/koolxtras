@@ -257,17 +257,19 @@ if hookmetamethod then -- Credits to my pooks nothm for this function
 			Name = 'Rotations',
 			Function = function(callback)
 				if callback then
-					original = hookmetamethod(game, '__newindex', function(self, key, val)
-						if self == lplr.Character.PrimaryPart and key == 'CFrame' then
-							if not Flight.Enabled then
-								if Killaura.Enabled and EntityCFrame then
-									return original(self, key, EntityCFrame)
+					if not original then
+						original = hookmetamethod(game, '__newindex', function(self, key, val)
+							if self == lplr.Character.PrimaryPart and key == 'CFrame' then
+								if not Flight.Enabled then
+									if Killaura.Enabled and EntityCFrame then
+										return original(self, key, EntityCFrame)
+									end
 								end
 							end
-						end
-	
-						return original(self, key, val)
-					end)
+		
+							return original(self, key, val)
+						end)
+					end
 				else
 					if original then
 						hookmetamethod(game, '__newindex', original)
