@@ -94,13 +94,14 @@ local AutoTool = {Enabled = false}
 local function getTool(class)
     for i,v in Dependencies.Classes[class] do
         print(v)
-        print(Entity.tool.hasTool(lplr, v))
+        print(Entity.tool.hasTool)
+        --print(Entity.tool.hasTool(lplr, v))
 
-        if Entity.tool.hasTool(lplr, v) then -- attempt to call a nil value
+        if Entity.tool.hasTool(lplr, v) ~= nil then
             return Entity.tool.hasTool(lplr, v)
         end
 
-        if AutoTool.Enabled and Entity.tool.hasToolInv(lplr, v) then
+        if AutoTool.Enabled and Entity.tool.hasToolInv(lplr, v) ~= nil then
             Dependencies.Remotes.EquipTool:FireServer(v)
             return Entity.tool.hasToolInv(lplr, v)
         end
