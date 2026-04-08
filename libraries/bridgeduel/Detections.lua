@@ -60,7 +60,7 @@ function Detections:test(typee)
 		if getscripthash(Detections.Paths.Client.Sword) ~= Detections.Hashes.Sword then
 	        Detections.Count += 1
 			Detections.Logs.SwordH = {
-			    Reason = 'SwordClient hash was not the same (Dev\'s potentially changed hash -- report to kool aid devs)'.
+			    Reason = 'SwordClient hash was not the same (Dev\'s potentially changed hash -- report to kool aid devs)',
 				Hash = getscripthash(Detections.Paths.Client.Sword),
 				OriginalHash = Detections.Hashes.Sword
 			}
