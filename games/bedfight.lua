@@ -117,13 +117,15 @@ end
 
 do
     local AntiKB, AntiKBConn
+	local VeloStore = {}
     AntiKB = Library.Tabs.Combat:CreateModule({
         Name = 'AntiKB',
         Function = function(callback)
             if callback then
                 for i,v in Dependencies.Modules.VeloUtils:GetChildren() do
                     if v.ClassName == 'LinearVelocity' then
-                        v.Enabled = false
+                        table.insert(VeloStore, v)
+						v.Parent = nil
                     end
 
                     continue
@@ -131,7 +133,8 @@ do
 
                 AntiKBConn = Dependencies.Modules.VeloUtils.ChildAdded:Connect(function(obj)
                     if obj.ClassName == 'LinearVelocity' then
-                        obj.Enabled = false
+                        table.insert(VeloStore, obj)
+						obj.Parent = nil
                     end
                 end)
             else
@@ -140,13 +143,10 @@ do
                     AntiKBConn = nil
                 end
 
-                for i,v in Dependencies.Modules.VeloUtils:GetChildren() do
-                    if v.ClassName == 'LinearVelocity' then
-                        v.Enabled = true
-                    end
-
-                    continue
-                end
+				for i,v in VeloStore do
+					v.Parent = Dependencies.Modules.VeloUtils
+					i = nil
+				end
             end
         end
     })
