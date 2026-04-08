@@ -169,20 +169,20 @@ do
 					task.wait(0.1)
 
 					if Entity.isAlive(lplr) then
-						local tool = getTool('Melee')
+						task.spawn(function()
+							local suc, res = pcall(function()
+								return Entity:GetClosestPlayer(Range.Value, Angle.Value, Wallcheck.Enabled)
+							end)
 
-						if tool then
-							task.spawn(function()
-								local suc, res = pcall(function()
-									return Entity:GetClosestPlayer(Range.Value, Angle.Value, Wallcheck.Enabled)
-								end)
+							local plr
+							if suc and res then
+								plr = res
+							end
 
-								local plr
-								if suc and res then
-									plr = res
-								end
+							if plr and Entity.isAlive(plr) then
+			                    local tool = getTool('Melee')
 
-								if plr and Entity.isAlive(plr) then
+								if tool then
 									EntityCFrame = CFrame.lookAt(lplr.Character.PrimaryPart.Position, Vector3.new(plr.Character.PrimaryPart.Position.X, lplr.Character.PrimaryPart.Position.Y, plr.Character.PrimaryPart.Position.Z))
 									pcall(Library.CreateTargetHUD, Library, TargetHUD.Enabled, plr.Name, plr.Character:FindFirstChildOfClass('Humanoid'), Players:GetUserThumbnailAsync(plr.UserId, Enum.ThumbnailType.AvatarBust, Enum.ThumbnailSize.Size48x48))
 
@@ -201,8 +201,8 @@ do
 								else
 								    Library:CreateTargetHUD(false)
 								end
-							end)
-						end
+							end
+						end)
 					end
 				until not Killaura.Enabled
 			end
