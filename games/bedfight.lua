@@ -160,7 +160,7 @@ do
 	local Range = {Value = 16}
 	local TargetHUD = {Enabled = false}
 	local Wallcheck = {Enabled = false}
-	local Swing, SwingDelay = {Enabled = true}, tick()
+	local Swing, SwingDelay, SwingName = {Enabled = true}, tick(), HttpService:GenerateGUID()
 	Killaura = Library.Tabs.Combat:CreateModule({
 		Name = 'Killaura',
 		Function = function(callback)
@@ -190,11 +190,13 @@ do
                                         SwingDelay = tick() + 0.2
 
     									pcall(Dependencies.Controllers.Viewmodel.PlayAnimation, Dependencies.Controllers.Viewmodel, 'Melee', 'Swing')
-    									if not lplr.Character.Humanoid:FindFirstChild('Swing1') then
-    									    Dependencies.Handlers.Tools.Sword.Sounds.Default.Swing1:Clone().Parent = lplr.Character.HumanoidRootPart
+    									if not lplr.Character.Humanoid:FindFirstChild(SwingName) then
+    									    local Swing = Dependencies.Handlers.Tools.Sword.Sounds.Default.Swing1:Clone()
+                                            Swing.Name = SwingName
+                                            Swing.Parent = lplr.Character.HumanoidRootPart
     									end
 
-    									lplr.Character.HumanoidRootPart:WaitForChild('Swing1'):Play()
+    									lplr.Character.HumanoidRootPart:WaitForChild(SwingName):Play()
     								end
 
     								task.spawn(Dependencies.Remotes.AttackPlayer.FireServer, Dependencies.Remotes.AttackPlayer, tool.Name, plr.Character)
