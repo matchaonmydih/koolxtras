@@ -165,41 +165,43 @@ do
 									return Entity:GetClosestPlayer(Range.Value, Angle.Value, Wallcheck.Enabled)
 								end)
 
-								local plr
+								local plr, bdplr
 								if suc and res then
 									plr = res
+									bdplr = Dependencies.Modules.Entity.FindByCharacter(plr.Character)
 								end
 
-								if plr and Entity.isAlive(plr) then
-									EntityCFrame = CFrame.lookAt(lplr.Character.PrimaryPart.Position, Vector3.new(plr.Character.PrimaryPart.Position.X, lplr.Character.PrimaryPart.Position.Y, plr.Character.PrimaryPart.Position.Z))
-									pcall(Library.CreateTargetHUD, Library, TargetHUD.Enabled, plr.Name, plr.Character:FindFirstChildOfClass('Humanoid'), Players:GetUserThumbnailAsync(plr.UserId, Enum.ThumbnailType.AvatarBust, Enum.ThumbnailSize.Size48x48))
-									ReplicatedStorage.Modules.Knit.Services.ToolService.RF.ToggleBlockSword:InvokeServer(AutoBlock.Enabled, tool)
+								if plr and bdplr and Entity.isAlive(plr) then
+									if bdplr.IsInPvpArena and Dependencies.Modules.Entity.LocalEntity.IsInPvpArena then
+										EntityCFrame = CFrame.lookAt(lplr.Character.PrimaryPart.Position, Vector3.new(plr.Character.PrimaryPart.Position.X, lplr.Character.PrimaryPart.Position.Y, plr.Character.PrimaryPart.Position.Z))
+										pcall(Library.CreateTargetHUD, Library, TargetHUD.Enabled, plr.Name, plr.Character:FindFirstChildOfClass('Humanoid'), Players:GetUserThumbnailAsync(plr.UserId, Enum.ThumbnailType.AvatarBust, Enum.ThumbnailSize.Size48x48))
+										ReplicatedStorage.Modules.Knit.Services.ToolService.RF.ToggleBlockSword:InvokeServer(AutoBlock.Enabled, tool)
 
-									if Swing.Enabled and SwingDelay < tick() then
-										SwingDelay = tick() + 0.25
-										lplr.Character.Humanoid.Animator:LoadAnimation(tool:WaitForChild('Animations'):WaitForChild('Swing')):Play()
+										if Swing.Enabled and SwingDelay < tick() then
+											SwingDelay = tick() + 0.25
+											lplr.Character.Humanoid.Animator:LoadAnimation(tool:WaitForChild('Animations'):WaitForChild('Swing')):Play()
 
-										if setthreadidentity then
-											setthreadidentity(2)
+											if setthreadidentity then
+												setthreadidentity(2)
+											end
+											pcall(Dependencies.Controllers.Viewmodel.PlayAnimation, Dependencies.Controllers.Viewmodel, tool.Name)
+											if setthreadidentity then
+												setthreadidentity(8)
+											end
 										end
-										pcall(Dependencies.Controllers.Viewmodel.PlayAnimation, Dependencies.Controllers.Viewmodel, tool.Name)
-										if setthreadidentity then
-											setthreadidentity(8)
-										end
-									end
 
-									local bdplr = Dependencies.Modules.Entity.FindByCharacter(plr.Character)
-									if bdplr and bdplr.Id then -- (not Dependencies.Modules.Detections.Logs.SwordH)
-										task.spawn(Dependencies.Blink.item_action.attack_entity.fire, {
-											target_entity_id = bdplr.Id,
-											is_crit = (AuraCrits and true) or lplr.Character.HumanoidRootPart.AssemblyLinearVelocity.Y < 0,
-											weapon_name = tool.Name,
-											extra = {
-												rizz = 'Bro.',
-												owo = 'What\'s this? OwO',
-												those = workspace.Name == 'Ok'
-											}
-										})
+										if bdplr.Id then -- (not Dependencies.Modules.Detections.Logs.SwordH)
+											task.spawn(Dependencies.Blink.item_action.attack_entity.fire, {
+												target_entity_id = bdplr.Id,
+												is_crit = (AuraCrits and true) or lplr.Character.HumanoidRootPart.AssemblyLinearVelocity.Y < 0,
+												weapon_name = tool.Name,
+												extra = {
+													rizz = 'Bro.',
+													owo = 'What\'s this? OwO',
+													those = workspace.Name == 'Ok'
+												}
+											})
+										end
 									end
 								else
 									EntityCFrame = nil
