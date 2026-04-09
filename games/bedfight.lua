@@ -123,7 +123,7 @@ do
             if callback then
                 for i,v in Dependencies.Modules.VeloUtils:GetChildren() do
                     if v.ClassName == 'LinearVelocity' then
-                        v.Enabled = false
+						v.MaxForce = 0
                     end
 
                     continue
@@ -131,7 +131,7 @@ do
 
                 AntiKBConn = Dependencies.Modules.VeloUtils.ChildAdded:Connect(function(obj)
                     if obj.ClassName == 'LinearVelocity' then
-                        obj.Enabled = false
+                        obj.MaxForce = 0
                     end
                 end)
             else
@@ -140,9 +140,9 @@ do
                     AntiKBConn = nil
                 end
 
-                for i,v in Dependencies.Modules.VeloUtils:GetChildren() do
+				for i,v in Dependencies.Modules.VeloUtils:GetChildren() do
                     if v.ClassName == 'LinearVelocity' then
-                        v.Enabled = true
+                        obj.MaxForce = 20000
                     end
 
                     continue
@@ -191,7 +191,7 @@ do
 
     									pcall(Dependencies.Controllers.Viewmodel.PlayAnimation, Dependencies.Controllers.Viewmodel, 'Melee', 'Swing')
     									if not lplr.Character.Humanoid:FindFirstChild('Swing1') then
-    									    Dependencies.Handlers.Tools.Sword.Sounds.Default.Swing1:Clone().Parent = lplr.Character.Humanoid
+    									    Dependencies.Handlers.Tools.Sword.Sounds.Default.Swing1:Clone().Parent = lplr.Character.HumanoidRootPart
     									end
 
     									lplr.Character.HumanoidRootPart:WaitForChild('Swing1'):Play()
