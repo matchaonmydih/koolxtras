@@ -1,7 +1,8 @@
 -- Decompiled by your's lovely (stav)
-local v_u_1 = game:GetService("Players")
-local v_u_2 = game:GetService("ReplicatedStorage")
-local v_u_3 = game:GetService("RunService")
+local cloneref = cloneref or function(obj) return obj end
+local v_u_1 = cloneref(game:GetService("Players"))
+local v_u_2 = cloneref(game:GetService("ReplicatedStorage"))
+local v_u_3 = cloneref(game:GetService("RunService"))
 local v_u_4 = {}
 local v_u_5 = {
 	["combat"] = "canAttack",
