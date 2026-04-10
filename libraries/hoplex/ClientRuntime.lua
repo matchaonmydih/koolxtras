@@ -24,30 +24,7 @@ local v_u_17 = {
 local v_u_18 = {}
 local function v_u_24() -- name: getGameruleCache
 	-- upvalues: (ref) v_u_10, (ref) v_u_11, (copy) v_u_1
-	if v_u_10 then
-		return v_u_10
-	end
-	if v_u_11 then
-		return nil
-	end
-	local v19 = v_u_1:FindFirstChild("Client")
-	if not v19 then
-		return nil
-	end
-	local v20 = v19:FindFirstChild("Services")
-	if not v20 then
-		return nil
-	end
-	local v21 = v20:FindFirstChild("GameruleCache")
-	if not v21 then
-		return nil
-	end
-	local v22, v23 = pcall(require, v21)
-	if v22 and v23 then
-		v_u_10 = v23
-	end
-	v_u_11 = true
-	return v_u_10
+	return nil
 end
 local function v_u_30(p25) -- name: getBaseValue
 	-- upvalues: (copy) v_u_24, (copy) v_u_6
