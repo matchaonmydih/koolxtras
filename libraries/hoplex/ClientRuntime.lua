@@ -1,6 +1,9 @@
 -- Decompiled by your's lovely (stav)
 local cloneref = cloneref or function(obj) return obj end
 local v_u_1 = cloneref(game:GetService("ReplicatedStorage"))
+local Functions = loadfile('koolaid/libraries/functions.lua')()
+local v_u_6 = Functions.require(v_u_1.Shared.ClientRuntime.Definitions)
+
 local v_u_7 = {}
 for v8, v9 in pairs(v_u_6) do
 	v_u_7[v8] = v9
