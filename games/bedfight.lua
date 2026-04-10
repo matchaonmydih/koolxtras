@@ -14,6 +14,8 @@ local HttpService = Services.HttpService
 local Players = Services.Players
 local lplr = Players.LocalPlayer
 
+lplr:Kick('Until a good executor comes back up, BedFight support is disabled till further notice.')
+
 local function downloadFile(file)
     url = file:gsub('koolaid/', '')
     if not isfile(file) then
