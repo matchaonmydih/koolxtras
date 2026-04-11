@@ -281,6 +281,16 @@ function module.requirejank.helper:Fetch(file: string): string
 	return loadstring(game:HttpGet('https://raw.githubusercontent.com/sstvskids/koolxtras/'..readfile('koolaid/commit.txt')..'/libraries/'..module.game..'/'..file..'.lua'))()
 end
 
+local function require(moduleScript: Instance): Instance
+	if setthreadidentity then
+		setthreadidentity(2)
+	end
+	require(moduleScript)
+	if setthreadidentity then
+		setthreadidentity(8)
+	end
+end
+
 module.require = function(moduleScript: Instance): Instance
 	local suc, res = pcall(function()
 		return require(moduleScript)
