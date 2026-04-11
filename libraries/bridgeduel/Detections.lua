@@ -27,8 +27,7 @@ local Detections = {
     Paths = {
         SendReport = ReplicatedStorage.Modules.Knit.Services.NetworkService.RF.SendReport,
         Client = {
-            Sword = ReplicatedStorage.Client.Components.All.Tools.SwordClient,
-            Block = ReplicatedStorage.Client.Controllers.All.BlockPlacementController
+            Sword = ReplicatedStorage.Client.Components.All.Tools.SwordClient
         }
     },
     Hashes = {
