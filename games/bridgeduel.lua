@@ -426,7 +426,13 @@ do
 
 									PlacePos = getPosition(lplr.Character.PrimaryPart.Position + lplr.Character.Humanoid.MoveDirection * (i * 3.5) - Vector3.yAxis * ((lplr.Character.PrimaryPart.Size.Y / 2) + lplr.Character.Humanoid.HipHeight + offset))
 									if not isAtPos(PlacePos) and not Raycast:IfBlockUnderneath(i) then
+										if setthreadidentity then
+											setthreadidentity(2)
+										end
 										task.spawn(Dependencies.Controllers.Block.PlaceBlock, Dependencies.Controllers.Block, PlacePos, btype)
+										if setthreadidentity then
+											setthreadidentity(8)
+										end
 									end
 								end
 							end

@@ -287,7 +287,6 @@ module.require = function(moduleScript: Instance): Instance
 	end)
 	
 	if suc and res ~= nil then
-		print(suc, res)
 		return res
 	end
 
