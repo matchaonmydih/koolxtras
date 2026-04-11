@@ -124,8 +124,7 @@ do
 		Default = 16
 	})
     Rotations = Killaura:CreateToggle({
-		Name = 'Rotations',
-		Enabled = true
+		Name = 'Rotations'
 	})
 	TargetHUD = Killaura:CreateToggle({
 		Name = 'HUD'
