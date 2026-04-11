@@ -57,7 +57,7 @@ local Dependencies = {
 do
 	Dependencies.Modules.Detections:test('hash')
 
-	if Dependencies.Modules.Detections.Logs.SwordH or Dependencies.Modules.Detections.Logs.BlockH then -- For future Stav: send webhook logic
+	if Dependencies.Modules.Detections.Logs.SwordH then -- For future Stav: send webhook logic
 		writefile('koolaid/logs.json', HttpService:JSONEncode(Dependencies.Modules.Detections.Logs))
 		Library:Notify('A potential detection has been tripped [HASH]. Log has been sent to the script developers.', 5)
 	end
@@ -231,7 +231,7 @@ do
 												extra = {
 													rizz = 'Bro.',
 													owo = 'What\'s this? OwO',
-													those = workspace.Name == 'Okay'
+													those = workspace.Name == 'Ok'
 												}
 											})
 										end

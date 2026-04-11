@@ -32,8 +32,7 @@ local Detections = {
         }
     },
     Hashes = {
-        Sword = 'A1D7E9719A830BC8E440C8B97B8E169F4A0731392A1AF50293F3A030020E789EA9F142A6FE507D667E757818F98B8E35',
-        Block = '4840DF86BC7F5965F5786A13363BF87AB3005FE51CDAC08EA537CF8D737FBA2785727DF4F68A99672B54327F0D84D371'
+        Sword = 'E0040F81AE5A16A7AC285E4950358C5B5B1D0EB54C98617649BC11B9A7652540E221C112239273D949D4F394AF2DE965'
     },
 	Logs = {
     	Game = {
@@ -64,16 +63,7 @@ function Detections:test(typee)
 				Hash = getscripthash(Detections.Paths.Client.Sword),
 				OriginalHash = Detections.Hashes.Sword
 			}
-	    end
-
-		if getscripthash(Detections.Paths.Client.Block) ~= Detections.Hashes.Block then
-	        Detections.Count += 1
-			Detections.Logs.BlockH = {
-			    Reason = 'BlockPlacementController Hash was not the same (Dev\'s potentially changed hash -- report to kool aid devs)',
-				Hash = getscripthash(Detections.Paths.Client.Block),
-				OriginalHash = Detections.Hashes.Block
-			}
-	    end
+		end
 	end
 end
 
