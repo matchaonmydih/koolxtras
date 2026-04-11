@@ -14,7 +14,8 @@ local lplr = Players.LocalPlayer
 local ids = {
     blindshot = {118614517739521, 111176938448555},
 	bridgeduel = {139566161526375},
-	bedfight = {71480482338212}
+	hoplex = {109668355806967}
+	--bedfight = {71480482338212}
 }
 
 local queue_on_teleport = queue_on_teleport or (syn and syn.queue_on_teleport) or queueonteleport
