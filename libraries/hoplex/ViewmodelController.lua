@@ -9,6 +9,9 @@ local Services = setmetatable({}, {
 })
 
 local ReplicatedStorage = Services.ReplicatedStorage
+local Workspace = Services.Workspace
+
+-- Viewmodel: Workspace.CurrentCamera:WaitForChild('ViewModel').ViewModelHumanoid.Animator
 local Viewmodel = {
     Animation = ReplicatedStorage.Assets.Animations.HitAnimation
 }
