@@ -31,7 +31,7 @@ local Raycast = loadstring(downloadFile('koolaid/libraries/raycast.lua'))()
 local Entity = loadstring(downloadFile('koolaid/libraries/entity.lua'))()
 
 local Dependencies = {
-    Client = Functions.require(ReplicatedStorage.Shared.ClientRuntime.Client), -- Attack, Block Placement, BreakBlock
+    Client = Functions.require(ReplicatedStorage.Shared.ClientRuntime), -- Attack, Block Placement, BreakBlock
     Modules = {
         Combat = Functions.require(ReplicatedStorage.Shared.Utilities.CombatHitbox),
         ActionPermissions = Functions.require(ReplicatedStorage.Shared.Utilities.ActionPermissions)
