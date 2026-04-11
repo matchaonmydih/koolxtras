@@ -50,7 +50,7 @@ local Dependencies = {
 
 do
 	local Reach
-	local Value, old = {Value = 22}, Dependencies.Modules.Definitions.GetDefaultValue('combatReach') or 3
+	local Value, old = {Value = 16}, Dependencies.Modules.Definitions.GetDefaultValue('combatReach') or 3
 	Reach = Library.Tabs.Combat:CreateModule({
 		Name = 'Reach',
 		Function = function(callback)
@@ -61,12 +61,18 @@ do
 			end
 		end
 	})
+	Value = Reach:CreateSlider({
+		Name = 'Value',
+		Min = 1,
+		Max = 22,
+		Default = 16
+	})
 end
 
 local Killaura, Flight = {Enabled = false}, {Enabled = false}
 do
     local Angle = {Value = 360}
-	local Range = {Value = 22}
+	local Range = {Value = 16}
 	local TargetHUD = {Enabled = false}
 	local Wallcheck = {Enabled = false}
 	local Swing, SwingDelay = {Enabled = true}, tick()
@@ -137,7 +143,7 @@ do
 		Name = 'Range',
 		Min = 1,
 		Max = 22,
-		Default = 22
+		Default = 16
 	})
     Rotations = Killaura:CreateToggle({
 		Name = 'Rotations'
