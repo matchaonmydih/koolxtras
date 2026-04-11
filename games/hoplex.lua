@@ -77,7 +77,6 @@ do
 
                             task.spawn(function()
     							if tool and Dependencies.Constants.Tool.Types.IsCombatTool(tool) then
-                                    EntityCFrame = CFrame.lookAt(lplr.Character.PrimaryPart.Position, Vector3.new(plr.Character.PrimaryPart.Position.X, lplr.Character.PrimaryPart.Position.Y, plr.Character.PrimaryPart.Position.Z))
     								pcall(Library.CreateTargetHUD, Library, TargetHUD.Enabled, plr.Name, plr.Character:FindFirstChildOfClass('Humanoid'), Players:GetUserThumbnailAsync(plr.UserId, Enum.ThumbnailType.AvatarBust, Enum.ThumbnailSize.Size48x48))
 
     								if Swing.Enabled and SwingDelay < tick() then
@@ -86,6 +85,7 @@ do
     								end
 
                                     if Rotations.Enabled then
+                                        EntityCFrame = CFrame.lookAt(lplr.Character.PrimaryPart.Position, Vector3.new(plr.Character.PrimaryPart.Position.X, lplr.Character.PrimaryPart.Position.Y, plr.Character.PrimaryPart.Position.Z))
                                         lplr.Character.PrimaryPart.CFrame = CFrame.new(lplr.Character.PrimaryPart.Position) * CFrame.Angles(0, math.atan2(-EntityCFrame.LookVector.X, -EntityCFrame.LookVector.Z), 0)
 
                                         if Entity.isFirstPerson() then
