@@ -47,8 +47,6 @@ local Dependencies = {
     }
 }
 
-local KillauraEntity
-local EntityCFrame
 local Killaura, Flight = {Enabled = false}, {Enabled = false}
 do
     local Angle = {Value = 360}
@@ -56,6 +54,7 @@ do
 	local TargetHUD = {Enabled = false}
 	local Wallcheck = {Enabled = false}
 	local Swing, SwingDelay = {Enabled = true}, tick()
+    local Rotations, EntityCFrame = {Enabled = false}, nil
 	Killaura = Library.Tabs.Combat:CreateModule({
 		Name = 'Killaura',
 		Function = function(callback)
@@ -78,7 +77,6 @@ do
 
                             task.spawn(function()
     							if tool and Dependencies.Constants.Tool.Types.IsCombatTool(tool) then
-                                    KillauraEntity = plr
                                     EntityCFrame = CFrame.lookAt(lplr.Character.PrimaryPart.Position, Vector3.new(plr.Character.PrimaryPart.Position.X, lplr.Character.PrimaryPart.Position.Y, plr.Character.PrimaryPart.Position.Z))
     								pcall(Library.CreateTargetHUD, Library, TargetHUD.Enabled, plr.Name, plr.Character:FindFirstChildOfClass('Humanoid'), Players:GetUserThumbnailAsync(plr.UserId, Enum.ThumbnailType.AvatarBust, Enum.ThumbnailSize.Size48x48))
 
@@ -87,20 +85,28 @@ do
     									pcall(Dependencies.Controllers.Viewmodel.PlayAnimation, Dependencies.Controllers.Viewmodel)
     								end
 
+                                    if Rotations.Enabled then
+                                        lplr.Character.PrimaryPart.CFrame = CFrame.new(lplr.Character.PrimaryPart.Position) * CFrame.Angles(0, math.atan2(-EntityCFrame.LookVector.X, -EntityCFrame.LookVector.Z), 0)
+
+                                        if Entity.isFirstPerson() then
+                                            Workspace.CurrentCamera.CFrame = CFrame.lookAt(Workspace.CurrentCamera.CFrame.Position, plr.Character.PrimaryPart.Position)
+                                        end
+                                    end
+
     								task.spawn(Dependencies.Client.Attack, plr.Character)
     							else
-                                    KillauraEntity, EntityCFrame = nil, nil
+                                    EntityCFrame = nil
     								Library:CreateTargetHUD(false)
     							end
                             end)
 						else
-                            KillauraEntity, EntityCFrame = nil, nil
+                            EntityCFrame = nil
 						    Library:CreateTargetHUD(false)
 						end
 					end
 				until not Killaura.Enabled
 			else
-                KillauraEntity, EntityCFrame = nil, nil
+                EntityCFrame = nil
 			    Library:CreateTargetHUD(false)
 			end
 		end
@@ -117,6 +123,10 @@ do
 		Max = 18,
 		Default = 16
 	})
+    Rotations = Killaura:CreateToggle({
+		Name = 'Rotations',
+		Enabled = true
+	})
 	TargetHUD = Killaura:CreateToggle({
 		Name = 'HUD'
 	})
@@ -127,28 +137,6 @@ do
 		Name = 'Swing',
 		Enabled = true
 	})
-end
-
-do
-    local Rotations
-    Rotations = Library.Tabs.Combat:CreateModule({
-        Name = 'Rotations',
-        Function = function(callback)
-            if callback then
-                repeat
-                    if Entity.isAlive(lplr) and KillauraEntity and EntityCFrame then
-                        lplr.Character.PrimaryPart.CFrame = CFrame.new(lplr.Character.PrimaryPart.Position) * CFrame.Angles(0, math.atan2(-EntityCFrame.LookVector.X, -EntityCFrame.LookVector.Z), 0)
-
-                        if Entity.isFirstPerson() then
-                            Workspace.CurrentCamera.CFrame = CFrame.lookAt(Workspace.CurrentCamera.CFrame.Position, KillauraEntity.Character.PrimaryPart.Position)
-                        end
-                    end
-
-                    task.wait()
-                until not Rotations.Enabled
-            end
-        end
-    })
 end
 
 do
