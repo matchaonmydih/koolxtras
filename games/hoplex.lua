@@ -35,7 +35,8 @@ local Dependencies = {
     Client = Functions.require(ReplicatedStorage.Shared.ClientRuntime), -- Attack, Block Placement, BreakBlock
     Modules = {
         Combat = Functions.require(ReplicatedStorage.Shared.Utilities.CombatHitbox),
-        ActionPermissions = Functions.require(ReplicatedStorage.Shared.Utilities.ActionPermissions)
+        ActionPermissions = Functions.require(ReplicatedStorage.Shared.Utilities.ActionPermissions),
+		Definitions = Functions.require(ReplicatedStorage.Shared.ClientRuntime.Definitions)
     },
     Constants = {
         Tool = {
@@ -47,10 +48,25 @@ local Dependencies = {
     }
 }
 
+do
+	local Reach
+	local Value, old = {Value = 22}, Dependencies.Modules.Definitions.GetDefaultValue('combatReach') or 3
+	Reach = Library.Tabs.Combat:CreateModule({
+		Name = 'Reach',
+		Function = function(callback)
+			if callback then
+				Dependencies.Client.SetCombatReach(Value.Value)
+			else
+				Dependencies.Client.SetCombatReach(Dependencies.Modules.Definitions.GetDefaultValue('combatReach') or 3)
+			end
+		end
+	})
+end
+
 local Killaura, Flight = {Enabled = false}, {Enabled = false}
 do
     local Angle = {Value = 360}
-	local Range = {Value = 16}
+	local Range = {Value = 22}
 	local TargetHUD = {Enabled = false}
 	local Wallcheck = {Enabled = false}
 	local Swing, SwingDelay = {Enabled = true}, tick()
@@ -62,7 +78,7 @@ do
 				repeat
 					task.wait(0.1)
 
-					if Entity.isAlive(lplr) then
+					if Entity.isAlive(lplr) and Dependencies.Modules.ActionPermissions.CanCombat(lplr) then
 						local suc, res = pcall(function()
 							return Entity:GetClosestPlayer(Range.Value, Angle.Value, Wallcheck.Enabled)
 						end)
@@ -72,7 +88,7 @@ do
 							plr = res
 						end
 
-						if plr and Entity.isAlive(plr) then
+						if plr and Entity.isAlive(plr) and Dependencies.Modules.ActionPermissions.CanCombat(plr) then
                             local tool = Entity.tool.getTool(lplr)
 
                             task.spawn(function()
@@ -120,8 +136,8 @@ do
 	Range = Killaura:CreateSlider({
 		Name = 'Range',
 		Min = 1,
-		Max = 18,
-		Default = 16
+		Max = 22,
+		Default = 22
 	})
     Rotations = Killaura:CreateToggle({
 		Name = 'Rotations'
