@@ -31,5 +31,152 @@ local Raycast = loadstring(downloadFile('koolaid/libraries/raycast.lua'))()
 local Entity = loadstring(downloadFile('koolaid/libraries/entity.lua'))()
 
 local Dependencies = {
-    Client = Functions.require(ReplicatedStorage.Shared.ClientRuntime.Client)
+    Client = Functions.require(ReplicatedStorage.Shared.ClientRuntime.Client), -- Attack, Block Placement, BreakBlock
+    Modules = {
+        Combat = Functions.require(ReplicatedStorage.Shared.Utilities.CombatHitbox),
+        ActionPermissions = Functions.require(ReplicatedStorage.Shared.Utilities.ActionPermissions)
+    },
+    Constants = {
+        Tool = {
+            Types = Functions.require(ReplicatedStorage.Shared.Constants.ToolTypes)
+        }
+    },
+    Controllers = {
+        Viewmodel = Functions.requirejank.helper:Fetch('ViewmodelController')
+    }
 }
+
+local EntityCFrame
+local Killaura, Flight = {Enabled = false}, {Enabled = false}
+do
+    local Angle = {Value = 360}
+	local Range = {Value = 16}
+	local TargetHUD = {Enabled = false}
+	local Wallcheck = {Enabled = false}
+	local Swing, SwingDelay = {Enabled = true}, tick()
+	Killaura = Library.Tabs.Combat:CreateModule({
+		Name = 'Killaura',
+		Function = function(callback)
+			if callback then
+				repeat
+					task.wait(0.1)
+
+					if Entity.isAlive(lplr) then
+						local suc, res = pcall(function()
+							return Entity:GetClosestPlayer(Range.Value, Angle.Value, Wallcheck.Enabled)
+						end)
+
+						local plr
+						if suc and res then
+							plr = res
+						end
+
+						if plr and Entity.isAlive(plr) then
+                            local tool = Entity.tool.getTool(lplr)
+
+                            task.spawn(function()
+    							if tool and Dependencies.Constants.Tool.Types.IsCombatTool(Tool) then
+                                    EntityCFrame = CFrame.lookAt(lplr.Character.PrimaryPart.Position, Vector3.new(plr.Character.PrimaryPart.Position.X, lplr.Character.PrimaryPart.Position.Y, plr.Character.PrimaryPart.Position.Z))
+    								pcall(Library.CreateTargetHUD, Library, TargetHUD.Enabled, plr.Name, plr.Character:FindFirstChildOfClass('Humanoid'), Players:GetUserThumbnailAsync(plr.UserId, Enum.ThumbnailType.AvatarBust, Enum.ThumbnailSize.Size48x48))
+
+    								if Swing.Enabled and SwingDelay < tick() then
+                                        SwingDelay = tick() + 0.1
+    									pcall(Dependencies.Controllers.Viewmodel.PlayAnimation, Dependencies.Controllers.Viewmodel)
+    								end
+
+    								task.spawn(Dependencies.Client.Attack, plr.Character)
+    							else
+    								Library:CreateTargetHUD(false)
+    							end
+                            end)
+						else
+						    Library:CreateTargetHUD(false)
+						end
+					end
+				until not Killaura.Enabled
+			else
+			    Library:CreateTargetHUD(false)
+			end
+		end
+	})
+	Angle = Killaura:CreateSlider({
+		Name = 'Max Angle',
+		Min = 1,
+		Max = 360,
+		Default = 360
+	})
+	Range = Killaura:CreateSlider({
+		Name = 'Range',
+		Min = 1,
+		Max = 18,
+		Default = 16
+	})
+	TargetHUD = Killaura:CreateToggle({
+		Name = 'HUD'
+	})
+	Wallcheck = Killaura:CreateToggle({
+		Name = 'Wallcheck'
+	})
+	Swing = Killaura:CreateToggle({
+		Name = 'Swing',
+		Enabled = true
+	})
+end
+
+do
+    local Speed
+	local SpeedSlider = {Value = 16}
+    Speed = Library.Tabs.Movement:CreateModule({
+        Name = 'Speed',
+        Function = function(callback)
+            if callback then
+                repeat
+                    if Entity.isAlive(lplr) then
+                        local moveDir = lplr.Character.Humanoid.MoveDirection
+                        lplr.Character.HumanoidRootPart.Velocity = Vector3.new(moveDir.X * SpeedSlider.Value, lplr.Character.HumanoidRootPart.Velocity.Y, moveDir.Z * SpeedSlider.Value)
+                    end
+
+                    task.wait()
+                until not Speed.Enabled
+            end
+        end
+    })
+    SpeedSlider = Speed:CreateSlider({
+        Name = 'Speed',
+		Min = 1,
+		Max = 100,
+		Default = 16
+    })
+end
+
+do
+	local OldY, NewY
+	Flight = Library.Tabs.Movement:CreateModule({
+		Name = 'Flight',
+		Function = function(callback)
+			if callback then
+				NewY = 0
+				OldY = lplr.Character.PrimaryPart.Position.Y
+
+				repeat
+					if Entity.isAlive(lplr) then
+                        lplr.Character.PrimaryPart.CFrame = CFrame.new(lplr.Character.PrimaryPart.Position.X, OldY + NewY, lplr.Character.PrimaryPart.Position.Z) * lplr.Character.PrimaryPart.CFrame.Rotation
+
+						if UserInputService:IsKeyDown('Space') and not UserInputService:GetFocusedTextBox() then
+                            NewY += 0.8
+                        elseif UserInputService:IsKeyDown('LeftShift') and not UserInputService:GetFocusedTextBox() then
+                            NewY -= 0.8
+                        end
+					end
+
+					task.wait()
+				until not Flight.Enabled
+			else
+				NewY = 0
+				if Entity.isAlive(lplr) then
+					OldY = lplr.Character.PrimaryPart.Position.Y
+				end
+			end
+		end
+	})
+end

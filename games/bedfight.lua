@@ -157,7 +157,6 @@ end
 local EntityCFrame
 local Killaura, Flight = {Enabled = false}, {Enabled = false}
 do
-    local Aura
     local Angle = {Value = 360}
 	local Range = {Value = 16}
 	local TargetHUD = {Enabled = false}
