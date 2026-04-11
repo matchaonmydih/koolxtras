@@ -388,6 +388,7 @@ end
 do
 	-- Credits to my pooks nothm for the getPosition, isAtPos and GetPosition calculations
 	local Scaffold, PlacePos
+	local ItemCheck = {Enabled = false}
 	local Expand = {Value = 3}
 
 	local function getPosition(pos)
@@ -406,6 +407,21 @@ do
 		return false
 	end
 
+	local function getBlock()
+		local tool = Entity.tool.getTool(lplr)
+		if tool and tool:HasTag('Blocks') then
+			return tool
+		end
+
+		if ItemCheck.Enabled then return nil end
+		for i, v in lplr.Backpack do
+			if v:HasTag('Blocks') then
+				return v
+			end
+		end
+
+		return nil
+	end
 
 	Scaffold = Library.Tabs.Movement:CreateModule({
 		Name = 'Scaffold',
@@ -415,9 +431,9 @@ do
 					if Entity.isAlive(lplr) then
 						task.spawn(function()
 							for i = 1, Expand.Value do
-								local tool = Entity.tool.getTool(lplr)
+								local tool = getBlock()
 
-								if tool and tool:HasTag('Blocks') then
+								if tool then
 									local btype = tool.Name == 'Blocks' and 'Clay' or tool.Name:sub(1, -6)
 									local offset = Dependencies.Modules.Entity.LocalEntity.IsSneaking and 4.5 or 1.5
 
@@ -444,6 +460,10 @@ do
 				until not Scaffold.Enabled
 			end
 		end
+	})
+	ItemCheck = Scaffold:CreateToggle({
+		Name = 'Item Check',
+		Enabled = true
 	})
 	Expand = Scaffold:CreateSlider({
         Name = 'Expand',
@@ -479,11 +499,11 @@ do
                 StaffConn = Players.PlayerAdded:Connect(function(plr)
                     if table.find(Dependencies.Constants.Ranks[1].Users, plr.UserId) then
                         if Method.Value == 'Notify' then
-                            Library:Notify('A staff member is in your game: '..v.Name, 6)
+                            Library:Notify('A staff member is in your game: '..plr.Name, 6)
                         elseif Method.Value == 'Uninject' then
                             Library:Uninject()
                         elseif Method.Value == 'Kick' then
-                            lplr:Kick('A staff member is in your game: '..v.Name)
+                            lplr:Kick('A staff member is in your game: '..plr.Name)
                         end
                     end
                 end)
