@@ -292,7 +292,6 @@ function v_u_1.GetType(p35) -- name: GetType
 					for _, v50 in ipairs(v49) do
 						if v50 == v38 then
 							v95 = true
-							::l96::
 							if v95 then
 								return v_u_1.SWORD
 							end
@@ -300,7 +299,6 @@ function v_u_1.GetType(p35) -- name: GetType
 							for _, v52 in ipairs(v51) do
 								if v52 == v38 then
 									v94 = true
-									::l103::
 									if v94 then
 										return v_u_1.MACE
 									end
@@ -311,7 +309,6 @@ function v_u_1.GetType(p35) -- name: GetType
 									for _, v54 in ipairs(v53) do
 										if v54 == v38 then
 											v93 = true
-											::l112::
 											if v93 then
 												return v_u_1.PICKAXE
 											end
@@ -319,7 +316,6 @@ function v_u_1.GetType(p35) -- name: GetType
 											for _, v56 in ipairs(v55) do
 												if v56 == v38 then
 													v92 = true
-													::l119::
 													if v92 then
 														return v_u_1.AXE
 													end
@@ -327,7 +323,6 @@ function v_u_1.GetType(p35) -- name: GetType
 													for _, v58 in ipairs(v57) do
 														if v58 == v38 then
 															v91 = true
-															::l126::
 															if v91 then
 																return v_u_1.SHOVEL
 															end
@@ -335,7 +330,6 @@ function v_u_1.GetType(p35) -- name: GetType
 															for _, v60 in ipairs(v59) do
 																if v60 == v38 then
 																	v90 = true
-																	::l133::
 																	if v90 then
 																		return v_u_1.HOE
 																	end
@@ -355,7 +349,6 @@ function v_u_1.GetType(p35) -- name: GetType
 																	for _, v62 in ipairs(v61) do
 																		if v62 == v38 then
 																			v89 = true
-																			::l149::
 																			if v89 then
 																				return v_u_1.THROWABLE
 																			end
@@ -363,7 +356,6 @@ function v_u_1.GetType(p35) -- name: GetType
 																			for _, v64 in ipairs(v63) do
 																				if v64 == v38 then
 																					v88 = true
-																					::l156::
 																					if v88 then
 																						return v_u_1.WINDCHARGE
 																					end
@@ -371,7 +363,6 @@ function v_u_1.GetType(p35) -- name: GetType
 																					for _, v66 in ipairs(v65) do
 																						if v66 == v38 then
 																							v87 = true
-																							::l163::
 																							if v87 then
 																								return v_u_1.FIRECHARGE
 																							end
@@ -379,7 +370,6 @@ function v_u_1.GetType(p35) -- name: GetType
 																							for _, v68 in ipairs(v67) do
 																								if v68 == v38 then
 																									v86 = true
-																									::l170::
 																									if v86 then
 																										return v_u_1.BOW
 																									end
@@ -387,7 +377,6 @@ function v_u_1.GetType(p35) -- name: GetType
 																									for _, v70 in ipairs(v69) do
 																										if v70 == v38 then
 																											v85 = true
-																											::l177::
 																											if v85 then
 																												return v_u_1.BUCKET
 																											end
@@ -395,7 +384,6 @@ function v_u_1.GetType(p35) -- name: GetType
 																											for _, v72 in ipairs(v71) do
 																												if v72 == v38 then
 																													v84 = true
-																													::l184::
 																													if v84 then
 																														return v_u_1.TNT
 																													end
@@ -403,7 +391,6 @@ function v_u_1.GetType(p35) -- name: GetType
 																													for _, v74 in ipairs(v73) do
 																														if v74 == v38 then
 																															v83 = true
-																															::l191::
 																															if v83 or v_u_34(v38, "EndCrystal", "Crystal") then
 																																return v_u_1.END_CRYSTAL
 																															end
@@ -411,7 +398,6 @@ function v_u_1.GetType(p35) -- name: GetType
 																															for _, v76 in ipairs(v75) do
 																																if v76 == v38 then
 																																	v82 = true
-																																	::l199::
 																																	if v82 or v_u_34(v38, "TotemOfUndying", "Totem") then
 																																		return v_u_1.TOTEM
 																																	end
@@ -419,7 +405,6 @@ function v_u_1.GetType(p35) -- name: GetType
 																																	for _, v78 in ipairs(v77) do
 																																		if v78 == v38 then
 																																			v81 = true
-																																			::l207::
 																																			if v81 or v38:find("SplashPotion") then
 																																				return v_u_1.SPLASH_POTION
 																																			end
@@ -434,63 +419,48 @@ function v_u_1.GetType(p35) -- name: GetType
 																																		end
 																																	end
 																																	local v81 = false
-																																	goto l207
 																																end
 																															end
 																															local v82 = false
-																															goto l199
 																														end
 																													end
 																													local v83 = false
-																													goto l191
 																												end
 																											end
 																											local v84 = false
-																											goto l184
 																										end
 																									end
 																									local v85 = false
-																									goto l177
 																								end
 																							end
 																							local v86 = false
-																							goto l170
 																						end
 																					end
 																					local v87 = false
-																					goto l163
 																				end
 																			end
 																			local v88 = false
-																			goto l156
 																		end
 																	end
 																	local v89 = false
-																	goto l149
 																end
 															end
 															local v90 = false
-															goto l133
 														end
 													end
 													local v91 = false
-													goto l126
 												end
 											end
 											local v92 = false
-											goto l119
 										end
 									end
 									local v93 = false
-									goto l112
 								end
 							end
 							local v94 = false
-							goto l103
 						end
 					end
 					local v95 = false
-					goto l96
 				end
 			end
 			return v_u_1.MACE
