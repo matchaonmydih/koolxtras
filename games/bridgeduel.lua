@@ -386,6 +386,7 @@ do
 end
 
 do
+	-- Credits to my pooks nothm for the getPosition, isAtPos and GetPosition calculations
 	local Scaffold, PlacePos
 	local Expand = {Value = 3}
 
