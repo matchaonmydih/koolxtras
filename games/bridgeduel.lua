@@ -465,7 +465,7 @@ do
 								fake:AddTag('TempBlock')
 								fake:AddTag('Block')
 
-								if not isAtPos(PlacePos) and not Raycast:IfBlockUnderneath(1) then
+								if not isAtPos(PlacePos) and not Raycast:IfBlockUnderneath() then
 									if setthreadidentity then
 										setthreadidentity(2)
 									end
