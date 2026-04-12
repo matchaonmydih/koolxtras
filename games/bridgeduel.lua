@@ -47,7 +47,8 @@ local Dependencies = {
     },
 	Paths = {
 		Knockback = ReplicatedStorage.Modules.Knit.Services.CombatService.RE.KnockBackApplied,
-		Sword = ReplicatedStorage.Client.Components.All.Tools.SwordClient
+		Sword = ReplicatedStorage.Client.Components.All.Tools.SwordClient,
+		SendReport = ReplicatedStorage.Modules.Knit.Services.NetworkService.RF.SendReport
 	},
 }
 
@@ -542,9 +543,9 @@ do
 		Name = 'Disabler',
 		Function = function(callback)
 			if callback then
-				Dependencies.Modules.Detections.Paths.SendReport.Parent = nil
+				Dependencies.Paths.SendReport.Parent = nil
 			else
-				Dependencies.Modules.Detections.Paths.SendReport.Parent = ReplicatedStorage.Modules.Knit.Services.NetworkService.RF
+				Dependencies.Paths.SendReport.Parent = ReplicatedStorage.Modules.Knit.Services.NetworkService.RF
 			end
 		end
 	})
