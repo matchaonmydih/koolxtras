@@ -58,9 +58,9 @@ local Dependencies = {
 
 do
 	Dependencies.Constants.Extra = Dependencies.Modules.Helper.dump((Dependencies.Modules.Helper.decompile(Dependencies.Paths.Sword)))
-	for i,v in Dependencies.Constants.Extra do
-		print(i,v) end
 end
+
+print(Dependencies.Constants.Extra)
 
 do
 	local AutoClicker
