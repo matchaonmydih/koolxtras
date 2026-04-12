@@ -220,8 +220,15 @@ do
 										end
 									end
 
-									local bdplr = Dependencies.Modules.Entity.FindByCharacter(plr.Character)
-									if bdplr.Id and Dependencies.Constants.Extra then -- (not Dependencies.Modules.Detections.Logs.SwordH)
+									local suc, res = pcall(function()
+										return Dependencies.Modules.Entity.FindByCharacter(plr.Character)
+									end)
+
+									if suc and res ~= nil then
+										bdplr = res
+									end
+
+									if bdplr and bdplr.Id and Dependencies.Constants.Extra then -- (not Dependencies.Modules.Detections.Logs.SwordH)
 										task.spawn(Dependencies.Blink.item_action.attack_entity.fire, {
 											target_entity_id = bdplr.Id,
 											is_crit = (AuraCrits and true) or lplr.Character.HumanoidRootPart.AssemblyLinearVelocity.Y < 0,
