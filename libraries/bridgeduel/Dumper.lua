@@ -54,8 +54,9 @@ Helper.decompile = function(scriptPath: ModuleScript | LocalScript): string
     return string.gsub(JSON.data, string.char(0x00CD), " ")
 end
 
-Helper.dump = function(source)
-    local sandbox, results, pattern = {workspace = workspace}, {}, string.format('%%["%s"%%]%%s*=%%s*(%%b{})', 'extra')
+Helper.dump = function(source, sandbox)
+    sandbox = sandbox or {workspace = workspace}
+    local results, pattern = {}, string.format('%%["%s"%%]%%s*=%%s*(%%b{})', 'extra')
 
     local raw = source:match(pattern)
     if not raw then return results end
