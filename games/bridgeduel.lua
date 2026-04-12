@@ -170,8 +170,6 @@ do
     })
 end
 
-for i,v in Dependencies.Modules.Entity.LocalEntity do print(i,v) end
-
 local EntityCFrame
 local Killaura, Flight = {Enabled = false}, {Enabled = false}
 do
