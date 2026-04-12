@@ -202,12 +202,11 @@ do
 									plr = res
 								end
 
-								if plr and bdplr and Entity.isAlive(plr) then
-									print('what')
+								if plr and Entity.isAlive(plr) then
 									EntityCFrame = CFrame.lookAt(lplr.Character.PrimaryPart.Position, Vector3.new(plr.Character.PrimaryPart.Position.X, lplr.Character.PrimaryPart.Position.Y, plr.Character.PrimaryPart.Position.Z))
 									pcall(Library.CreateTargetHUD, Library, TargetHUD.Enabled, plr.Name, plr.Character:FindFirstChildOfClass('Humanoid'), Players:GetUserThumbnailAsync(plr.UserId, Enum.ThumbnailType.AvatarBust, Enum.ThumbnailSize.Size48x48))
-									ReplicatedStorage.Modules.Knit.Services.ToolService.RF.ToggleBlockSword:InvokeServer(AutoBlock.Enabled, tool)
 
+									ReplicatedStorage.Modules.Knit.Services.ToolService.RF.ToggleBlockSword:InvokeServer(AutoBlock.Enabled, tool)
 									if Swing.Enabled and SwingDelay < tick() then
 										SwingDelay = tick() + 0.25
 										lplr.Character.Humanoid.Animator:LoadAnimation(tool:WaitForChild('Animations'):WaitForChild('Swing')):Play()
