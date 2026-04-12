@@ -58,6 +58,7 @@ end
 
 Helper.dump = function(source, sandboxEnv)
     sandboxEnv = sandboxEnv or {workspace = Workspace}
+    print(sandboxEnv)
 
     local results, pattern = {}, source:match('%[%s*"extra"%s*%]%s*=%s*(%b{})')
     if not pattern then return nil end
