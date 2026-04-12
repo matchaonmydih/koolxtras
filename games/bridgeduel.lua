@@ -58,6 +58,7 @@ local Dependencies = {
 
 do
 	Dependencies.Constants.Extra = Dependencies.Modules.Helper.dump(Dependencies.Modules.Helper.decompile(Dependencies.Paths.Sword))
+	print(Dependencies.Constants.Extra)
 end
 
 do

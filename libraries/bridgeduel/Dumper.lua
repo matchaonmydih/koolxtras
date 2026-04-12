@@ -36,6 +36,7 @@ Helper.decompile = function(scriptPath: ModuleScript | LocalScript): string
 end
 
 Helper.dump = function(source)
+    print(source)
     local results, pattern = {}, string.format('%%["%s"%%]%%s*=%%s*(%%b{})', 'extra')
 
     local raw = source:match(pattern)
