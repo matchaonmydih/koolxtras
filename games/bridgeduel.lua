@@ -222,7 +222,7 @@ do
 											end
 										end
 
-										if bdplr.Id then -- (not Dependencies.Modules.Detections.Logs.SwordH)
+										if bdplr.Id and Dependencies.Constants.Extra then -- (not Dependencies.Modules.Detections.Logs.SwordH)
 											task.spawn(Dependencies.Blink.item_action.attack_entity.fire, {
 												target_entity_id = bdplr.Id,
 												is_crit = (AuraCrits and true) or lplr.Character.HumanoidRootPart.AssemblyLinearVelocity.Y < 0,
