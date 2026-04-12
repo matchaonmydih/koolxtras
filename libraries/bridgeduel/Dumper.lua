@@ -6,6 +6,17 @@
     Credits to @_vezt/hamza for the arguments dumper
 ]]
 
+local cloneref = cloneref or function(obj)
+	return obj
+end
+
+local Services = setmetatable({}, {
+	__index = function(self, obj)
+		return cloneref(game:GetService(obj))
+	end
+})
+
+local HttpService = Services.HttpService
 local Helper = {}
 
 Helper.decompile = function(scriptPath: ModuleScript | LocalScript): string
@@ -18,9 +29,25 @@ Helper.decompile = function(scriptPath: ModuleScript | LocalScript): string
     local okRequest: boolean, httpResult = pcall(request, {
         Url = "https://luadec.metaworm.site/",
         Method = "POST",
-        Body = bytecode,
+        Body = HttpService:JSONEncode({
+            script = crypt.base64encode(bytecode),
+            options = {
+                renamingType = "INFER", -- "RAW" | "SEQUENTIAL" | "INFER"
+                upvalueComment = true,
+                lineDefinedComment = true
+            },
+        }),
         Headers = {
             ["Content-Type"] = "text/plain"
+        },
+    })
+
+    HttpService:JSONEncode({
+        script = crypt.base64encode(bytecode),
+        options = {
+            renamingType = "INFER", -- "RAW" | "SEQUENTIAL" | "INFER"
+            upvalueComment = true,
+            lineDefinedComment = true
         },
     })
 
