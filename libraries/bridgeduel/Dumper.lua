@@ -42,15 +42,6 @@ Helper.decompile = function(scriptPath: ModuleScript | LocalScript): string
         },
     })
 
-    HttpService:JSONEncode({
-        script = crypt.base64encode(bytecode),
-        options = {
-            renamingType = "INFER", -- "RAW" | "SEQUENTIAL" | "INFER"
-            upvalueComment = true,
-            lineDefinedComment = true
-        },
-    })
-
     if not okRequest then
         return `-- Failed to decompile, error:\n\n--[[\n{httpResult}\n--]]`
     end
