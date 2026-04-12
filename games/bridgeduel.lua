@@ -393,13 +393,15 @@ do
 	end
 
 	local function isAtPos(pos)
-		for i,v in workspace.Map:GetDescendants() do
-			if v:IsA("BasePart") and v.Name == "Block" then
-				if getPosition(v.Position) == pos then
-					return true
+		task.spawn(function()
+			for i,v in workspace.Map:GetDescendants() do
+				if v:IsA("BasePart") and v.Name == "Block" then
+					if getPosition(v.Position) == pos then
+						return true
+					end
 				end
 			end
-		end
+		end)
 
 		return false
 	end
