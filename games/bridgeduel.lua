@@ -197,18 +197,13 @@ do
 									return Entity:GetClosestPlayer(Range.Value, Angle.Value, Wallcheck.Enabled)
 								end)
 
-								print(suc, res)
-
-								local plr, bdplr
+								local plr
 								if suc and res then
 									plr = res
-									bdplr = Dependencies.Modules.Entity.FindByCharacter(plr.Character)
 								end
 
-								print(plr, bdplr)
 								if plr and bdplr and Entity.isAlive(plr) then
-									print('yo?')
-									if bdplr.IsInPvpArena and Dependencies.Modules.Entity.LocalEntity.IsInPvpArena then
+									if Dependencies.Modules.Entity.LocalEntity.IsInPvpArena then
 										print('what')
 										EntityCFrame = CFrame.lookAt(lplr.Character.PrimaryPart.Position, Vector3.new(plr.Character.PrimaryPart.Position.X, lplr.Character.PrimaryPart.Position.Y, plr.Character.PrimaryPart.Position.Z))
 										pcall(Library.CreateTargetHUD, Library, TargetHUD.Enabled, plr.Name, plr.Character:FindFirstChildOfClass('Humanoid'), Players:GetUserThumbnailAsync(plr.UserId, Enum.ThumbnailType.AvatarBust, Enum.ThumbnailSize.Size48x48))
@@ -227,8 +222,7 @@ do
 											end
 										end
 
-										for i,v in Dependencies.Constants.Extra do print(i,v) end
-
+										local bdplr = Dependencies.Modules.Entity.FindByCharacter(plr.Character)
 										if bdplr.Id and Dependencies.Constants.Extra then -- (not Dependencies.Modules.Detections.Logs.SwordH)
 											task.spawn(Dependencies.Blink.item_action.attack_entity.fire, {
 												target_entity_id = bdplr.Id,
