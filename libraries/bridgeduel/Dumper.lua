@@ -51,7 +51,7 @@ Helper.decompile = function(scriptPath: ModuleScript | LocalScript): string
     end
 
     local JSON = HttpService:JSONDecode(httpResult.Body)
-    return string.gsub(JSON.data, string.char(0x00CD), " ")
+    return select(1, string.gsub(JSON.data, string.char(0x00CD), " "))
 end
 
 Helper.dump = function(source, sandboxEnv)
