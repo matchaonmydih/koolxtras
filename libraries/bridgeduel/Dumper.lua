@@ -91,6 +91,19 @@ Helper.dump = function(source, sandboxEnv)
         end
     end
 
+    for key, value in pattern:gmatch('%["(.-)"%]%s*=%s*"(.-)"') do
+        if isQuotedString(value) then
+            results[key] = value
+        end
+    end
+
+    for key, value in pattern:gmatch('%["(.-)"%]%s*=%s*([^",%}][^,%}]-)%s*[,%}]') do
+        local trimmed = value:match("^%s*(.-)%s*$")
+        if trimmed ~= '' and not isQuotedString(value) then
+            results[key] = eval(trimmed)
+        end
+    end
+
     return results
 end
 
