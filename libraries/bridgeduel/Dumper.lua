@@ -82,7 +82,7 @@ Helper.dump = function(source, sandboxEnv)
     end
 
     for key, value in pattern:gmatch('%["(.-)"%]%s*=%s*(.-)[,%}]') do
-        value = value:match("^%s(.-)%s$")
+        value = value:match("^%s*(.-)%s*$")
         
         if isQuotedString(value) then
             results[key] = value:sub(2, -2)
