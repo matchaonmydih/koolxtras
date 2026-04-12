@@ -17,8 +17,6 @@ local Services = setmetatable({}, {
 })
 
 local HttpService = Services.HttpService
-local Workspace = Services.Workspace
-
 local Helper = {}
 
 Helper.decompile = function(scriptPath: ModuleScript | LocalScript): string
@@ -57,9 +55,7 @@ Helper.decompile = function(scriptPath: ModuleScript | LocalScript): string
 end
 
 Helper.dump = function(source, sandboxEnv)
-    sandboxEnv = sandboxEnv or {workspace = Workspace}
-    print(sandboxEnv)
-
+    sandboxEnv = sandboxEnv or {}
     local results, pattern = {}, source:match('%[%s*"extra"%s*%]%s*=%s*(%b{})')
     if not pattern then return nil end
 
@@ -70,7 +66,6 @@ Helper.dump = function(source, sandboxEnv)
         setfenv(chunk, setmetatable(sandboxEnv, {__index = getfenv()}))
         local suc, res = pcall(chunk)
         
-        print(suc, res)
         if suc then
             return res
         end
