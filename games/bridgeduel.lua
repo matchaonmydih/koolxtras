@@ -153,7 +153,7 @@ do
 						else
 							Dependencies.Constants.Melee.REACH_IN_STUDS = Value.Value
 						end
-						
+
 						Dependencies.Modules.Entity.LocalEntity.Reach = Value.Value
 					end
 
@@ -208,7 +208,7 @@ do
 									if Swing.Enabled and SwingDelay < tick() then
 										SwingDelay = tick() + 0.25
 										lplr.Character.Humanoid.Animator:LoadAnimation(tool:WaitForChild('Animations'):WaitForChild('Swing')):Play()
-										
+
 										if setthreadidentity then
 											setthreadidentity(2)
 										end
@@ -387,7 +387,6 @@ do
 	-- Credits to my pooks nothm for the getPosition, isAtPos and GetPosition calculations
 	local Scaffold, PlacePos
 	local ItemCheck = {Enabled = false}
-	local Expand = {Value = 3}
 
 	local function getPosition(pos)
 		return Vector3.new(math.floor((pos.X / 3) + 0.5) * 3, math.floor((pos.Y / 3) + 0.5) * 3, math.floor((pos.Z / 3) + 0.5) * 3)
@@ -427,27 +426,26 @@ do
 			if callback then
 				repeat
 					if Entity.isAlive(lplr) then
+						local tool = getBlock()
+
 						task.spawn(function()
-							for i = 1, Expand.Value do
-								local tool = getBlock()
+							if tool then
+								local btype = tool.Name == 'Blocks' and 'Clay' or tool.Name:sub(1, -6)
+								local offset = Dependencies.Modules.Entity.LocalEntity.IsSneaking and 4.5 or 1.5
 
-								if tool then
-									local btype = tool.Name == 'Blocks' and 'Clay' or tool.Name:sub(1, -6)
-									local offset = Dependencies.Modules.Entity.LocalEntity.IsSneaking and 4.5 or 1.5
+								if lplr.Character.Humanoid.FloorMaterial ~= Enum.Material.Air and (UserInputService:IsKeyDown(Enum.KeyCode.Space) and not UserInputService:GetFocusedTextBox()) then
+									lplr.Character.PrimaryPart.Velocity = Vector3.new(lplr.Character.PrimaryPart.Velocity.X, 28, lplr.Character.PrimaryPart.Velocity.Z)
+								end
 
-									if lplr.Character.Humanoid.FloorMaterial ~= Enum.Material.Air and (UserInputService:IsKeyDown(Enum.KeyCode.Space) and not UserInputService:GetFocusedTextBox()) then
-										lplr.Character.PrimaryPart.Velocity = Vector3.new(lplr.Character.PrimaryPart.Velocity.X, 28, lplr.Character.PrimaryPart.Velocity.Z)
+								PlacePos = getPosition(lplr.Character.PrimaryPart.Position + lplr.Character.Humanoid.MoveDirection * 3.5 - Vector3.yAxis * ((lplr.Character.PrimaryPart.Size.Y / 2) + lplr.Character.Humanoid.HipHeight + offset))
+
+								if not isAtPos(PlacePos) and not Raycast:IfBlockUnderneath(1) then
+									if setthreadidentity then
+										setthreadidentity(2)
 									end
-
-									PlacePos = getPosition(lplr.Character.PrimaryPart.Position + lplr.Character.Humanoid.MoveDirection * (i * 3.5) - Vector3.yAxis * ((lplr.Character.PrimaryPart.Size.Y / 2) + lplr.Character.Humanoid.HipHeight + offset))
-									if not isAtPos(PlacePos) and not Raycast:IfBlockUnderneath(i) then
-										if setthreadidentity then
-											setthreadidentity(2)
-										end
-										task.spawn(Dependencies.Controllers.Block.PlaceBlock, Dependencies.Controllers.Block, PlacePos, btype)
-										if setthreadidentity then
-											setthreadidentity(8)
-										end
+                                    task.spawn(Dependencies.Controllers.Block.PlaceBlock, Dependencies.Controllers.Block, PlacePos, btype)
+									if setthreadidentity then
+										setthreadidentity(8)
 									end
 								end
 							end
@@ -463,12 +461,6 @@ do
 		Name = 'Item Check',
 		Enabled = true
 	})
-	Expand = Scaffold:CreateSlider({
-        Name = 'Expand',
-		Min = 1,
-		Max = 6,
-		Default = 1
-    })
 end
 
 --[[
