@@ -172,6 +172,8 @@ do
     })
 end
 
+for i,v in Dependencies.Modules.Entity.LocalEntity do print(i,v) end
+
 local EntityCFrame
 local Killaura, Flight = {Enabled = false}, {Enabled = false}
 do
@@ -202,7 +204,7 @@ do
 									plr = res
 								end
 
-								if plr and Entity.isAlive(plr) then
+								if plr and Entity.isAlive(plr) then -- Dependencies.Modules.Entity.LocalEntity
 									EntityCFrame = CFrame.lookAt(lplr.Character.PrimaryPart.Position, Vector3.new(plr.Character.PrimaryPart.Position.X, lplr.Character.PrimaryPart.Position.Y, plr.Character.PrimaryPart.Position.Z))
 									pcall(Library.CreateTargetHUD, Library, TargetHUD.Enabled, plr.Name, plr.Character:FindFirstChildOfClass('Humanoid'), Players:GetUserThumbnailAsync(plr.UserId, Enum.ThumbnailType.AvatarBust, Enum.ThumbnailSize.Size48x48))
 
