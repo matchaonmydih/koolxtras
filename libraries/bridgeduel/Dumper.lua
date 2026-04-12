@@ -54,18 +54,16 @@ Helper.decompile = function(scriptPath: ModuleScript | LocalScript): string
     return string.gsub(JSON.data, string.char(0x00CD), " ")
 end
 
-Helper.dump = function(source, sandbox)
-    sandbox = {workspace = workspace}
-    local results, pattern = {}, string.format('%%["%s"%%]%%s*=%%s*(%%b{})', 'extra')
+Helper.dump = function(source, sandboxEnv)
+    sandboxEnv = sandboxEnv or {workspace = workspace}
+    local results, pattern = {}, source:match('%[%s"extra"%s%]%s=%s(%b{})')
+    if not pattern then return nil end
 
-    local raw = source:match(pattern)
-    if not raw then return results end
-
-    local function sandboxEnv(expr)
-        local chunk = loadstring('return '..expr)
+    local function eval(str)
+        local chunk, err = loadstring('return '..str)
         if not chunk then return nil end
 
-        setfenv(chunk, sandbox)
+        setfenv(chunk, sandboxEnv)
         local suc, res = pcall(chunk)
         
         print(suc, res)
@@ -76,12 +74,13 @@ Helper.dump = function(source, sandbox)
         return nil
     end
 
+    local reuslts = {}
     local function isQuotedString(s)
         return s:match('^".*"$') or s:match("^'.*'$")
     end
 
     for key, value in raw:gmatch('%["(.-)"%]%s=%s(.-)[,%}]') do
-        value = value:match("^%s*(.-)%s*$")
+        value = value:match("^%s(.-)%s$")
         if isQuotedString(value) then
             results[key] = value:sub(2, -2)
         else
