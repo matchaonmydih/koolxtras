@@ -40,6 +40,7 @@ function Execution:Send()
         elseif res.StatusCode ~= 200 then
             Library:Notify('[API] Unknown status code: bad internet?')
             print(suc, res.StatusCode, res)
+            for i,v in res do print(i,v) end
         end
     end
 
