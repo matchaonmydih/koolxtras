@@ -23,7 +23,7 @@ end
 local Execution = {}
 
 function Execution:Send()
-    local suc, request = pcall(request, {
+    local suc, res = pcall(request, {
         Url = 'https://koolaid.staavstudios.workers.dev/track',
         Method = 'POST',
         Body = HttpService:JSONEncode({
@@ -34,10 +34,10 @@ function Execution:Send()
         }),
     })
 
-    if suc and request then
-        if request.StatusCode == 429 then
+    if suc and res then
+        if res.StatusCode == 429 then
             Library:Notify('[API] Failed to log execution request: ratelimited?', 3)
-        elseif request.StatusCode ~= 200 then
+        elseif res.StatusCode ~= 200 then
             Library:Notify('[API] Unknown status code: bad internet?')
         end
     end
