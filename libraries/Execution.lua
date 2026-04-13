@@ -39,14 +39,14 @@ function Execution:Send()
 
     if suc and res then
         if res.StatusCode == 429 then
-            Library:Notify('[API] Failed to log execution request: ratelimited?', 3)
+            Library:Notify('[API] Ratelimited? (how bro you just executed)', 3)
         elseif res.StatusCode ~= 200 then
-            Library:Notify('[API] Unknown status code: bad internet?')
+            Library:Notify('[API] Unknown status code: bad internet?', 3)
         end
     end
 
     if not suc then
-        Library:Notify('[API] Failed to track execution log: bad internet?')
+        Library:Notify('[API] Failed to track execution log: bad internet?', 3)
     end
 end
 
