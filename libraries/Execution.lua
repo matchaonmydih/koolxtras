@@ -22,7 +22,7 @@ end
 
 local Execution = {}
 
-function Execution:Send()
+--[[function Execution:Send()
     local suc, res = pcall(request, {
         Url = 'https://koolaid.staavstudios.workers.dev/track',
         Method = 'POST',
@@ -39,14 +39,15 @@ function Execution:Send()
             Library:Notify('[API] Failed to log execution request: ratelimited?', 3)
         elseif res.StatusCode ~= 200 then
             Library:Notify('[API] Unknown status code: bad internet?')
-            print(suc, res.StatusCode, res)
-            for i,v in res do print(i,v) end
         end
     end
 
     if not suc then
         Library:Notify('[API] Failed to track execution log: bad internet?')
     end
+end]]
+
+function Execution:Send()
 end
 
 return Execution
