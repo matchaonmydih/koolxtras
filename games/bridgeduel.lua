@@ -543,7 +543,7 @@ end
 
 do
 	local NoFall
-	NoFall = Library.Tabs.Misc:CreateModule({
+	NoFall = Library.Tabs.World:CreateModule({
 		Name = 'NoFall',
 		Function = function(callback)
 			if callback then
