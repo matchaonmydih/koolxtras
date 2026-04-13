@@ -32,6 +32,9 @@ function Execution:Send()
             user_id = tostring(lplr.UserId),
             hwid = gethwid()
         }),
+        Headers = {
+            ['Content-Type'] = 'application/json'
+        }
     })
 
     if suc and res then
