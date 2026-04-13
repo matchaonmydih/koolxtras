@@ -556,6 +556,7 @@ do
 
 					task.wait()
 				until not NoFall.Enabled
+			end
 		end
 	})
 end
