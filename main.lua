@@ -1,3 +1,5 @@
+repeat task.wait() until game:IsLoaded()
+
 local cloneref = cloneref or function(obj)
 	return obj
 end
@@ -44,7 +46,7 @@ for i,v in ids do
 			shared.Library.Signal:newconn(lplr.OnTeleport, function()
 				local teleportScript = [[
 					if shared.queuing then return end
-					
+
 					shared.queuing = true
 					return loadstring(game:HttpGet('https://raw.githubusercontent.com/sstvskids/koolxtras/'..readfile('koolaid/commit.txt')..'/main.lua'))()
 				]]
