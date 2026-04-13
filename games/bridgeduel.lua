@@ -488,11 +488,11 @@ do
                 for _, v in Players:GetPlayers() do
                     if table.find(Dependencies.Constants.Ranks[1].Users, v.UserId) then
                         if Method.Value == 'Notify' then
-                            Library:Notify('A staff member is in your game: '..v.Name, 6)
+                            return Library:Notify('A staff member is in your game: '..v.Name, 6)
                         elseif Method.Value == 'Uninject' then
-                            Library:Uninject()
+                            return Library:Uninject()
                         elseif Method.Value == 'Kick' then
-                            lplr:Kick('A staff member is in your game: '..v.Name)
+                            return lplr:Kick('A staff member is in your game: '..v.Name)
                         end
                     end
                 end
@@ -500,11 +500,11 @@ do
                 StaffConn = Players.PlayerAdded:Connect(function(plr)
                     if table.find(Dependencies.Constants.Ranks[1].Users, plr.UserId) then
                         if Method.Value == 'Notify' then
-                            Library:Notify('A staff member is in your game: '..plr.Name, 6)
+                            return Library:Notify('A staff member is in your game: '..plr.Name, 6)
                         elseif Method.Value == 'Uninject' then
-                            Library:Uninject()
+                            return Library:Uninject()
                         elseif Method.Value == 'Kick' then
-                            lplr:Kick('A staff member is in your game: '..plr.Name)
+                            return lplr:Kick('A staff member is in your game: '..plr.Name)
                         end
                     end
                 end)
