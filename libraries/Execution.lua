@@ -22,7 +22,7 @@ end
 
 local Execution = {}
 
---[[function Execution:Send()
+function Execution:Send()
     local suc, res = pcall(request, {
         Url = 'https://koolaid.staavstudios.workers.dev/track',
         Method = 'POST',
@@ -45,9 +45,6 @@ local Execution = {}
     if not suc then
         Library:Notify('[API] Failed to track execution log: bad internet?')
     end
-end]]
-
-function Execution:Send()
 end
 
 return Execution
