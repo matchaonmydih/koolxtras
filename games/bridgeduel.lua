@@ -392,29 +392,9 @@ do
 		return Vector3.new(math.floor((pos.X / 3) + 0.5) * 3, math.floor((pos.Y / 3) + 0.5) * 3, math.floor((pos.Z / 3) + 0.5) * 3)
 	end
 
-	local cache = {}
-
-	for _, v in workspace.Map:GetDescendants() do
-		if v:IsA('BasePart') and v.Name == 'Block' then
-			cache[v] = getPosition(v.Position)
-		end
-	end
-
-	Library.Signal:newconn(workspace.Map.DescendantAdded, function(obj)
-		if obj:IsA('BasePart') and obj.Name == 'Block' then
-			cache[obj] = getPosition(obj.Position)
-		end
-	end)
-
-	Library.Signal:newconn(workspace.Map.DescendantRemoving, function(obj)
-		if cache[obj] then
-			cache[obj] = nil
-		end
-	end)
-
 	local function isAtPos(pos)
-		for i,v in cache do
-			if v == pos then
+		for _, v in workspace.Map:GetDescendants() do
+			if v:IsA('BasePart') and v.Name == 'Block' then
 				return true
 			end
 
