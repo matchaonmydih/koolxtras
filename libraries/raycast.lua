@@ -19,10 +19,10 @@ function raycast:CanSee(target, filter)
    	res = workspace:Raycast(lplr.Character.HumanoidRootPart.Position, target.Position - lplr.Character.HumanoidRootPart.Position, rayParams)
 	
     if res and res.Instance and not target:IsAncestorOf(res.Instance) then
-		return true
+		return false
 	end
 
-	return false
+	return true
 end
 
 function raycast:IfBlockUnderneath()
