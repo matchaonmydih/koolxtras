@@ -223,4 +223,4 @@ do
 	})
 end
 
-Library:Notify('Loaded successfully! Press INSERT to open kool aid.', 6)
+Library:Notify('Loaded successfully! Press RIGHT SHIFT to kill netanyahu.', 6)
