@@ -47,6 +47,7 @@ local Dependencies = {
         Ranks = Functions.require(ReplicatedStorage.Constants.Ranks)
     },
 	Paths = {
+		AimbotDtc = ReplicatedStorage.Remotes.GetActivePing,
 		Knockback = ReplicatedStorage.Modules.Knit.Services.CombatService.RE.KnockBackApplied,
 		OnFell = ReplicatedStorage.Modules.Knit.Services.VoidService.RE.OnFell,
 		Sword = ReplicatedStorage.Client.Components.All.Tools.SwordClient,
@@ -182,12 +183,13 @@ do
 	local TargetHUD = {Enabled = false}
 	local Wallcheck = {Enabled = false}
 	local Swing, SwingDelay = {Enabled = true}, tick()
+	local AttackDelay = tick()
 	Killaura = Library.Tabs.Combat:CreateModule({
 		Name = 'Killaura',
 		Function = function(callback)
 			if callback then
 				repeat
-					task.wait(0.1)
+					task.wait()
 
 					if Entity.isAlive(lplr) then
 						local tool = Entity.tool.getTool(lplr)
@@ -225,11 +227,13 @@ do
 										return Dependencies.Modules.Entity.FindByCharacter(plr.Character)
 									end)
 
+									local bdplr
 									if suc and res ~= nil then
 										bdplr = res
 									end
 
-									if bdplr and bdplr.Id and Dependencies.Constants.Extra then -- (not Dependencies.Modules.Detections.Logs.SwordH)
+									if bdplr and bdplr.Id and Dependencies.Constants.Extra and AttackDelay < tick() then -- (not Dependencies.Modules.Detections.Logs.SwordH)
+										AttackDelay = tick() + 0.1
 										task.spawn(Dependencies.Blink.item_action.attack_entity.fire, {
 											target_entity_id = bdplr.Id,
 											is_crit = (AuraCrits and true) or lplr.Character.HumanoidRootPart.AssemblyLinearVelocity.Y < 0,
@@ -563,8 +567,10 @@ do
 		Name = 'Disabler',
 		Function = function(callback)
 			if callback then
+				Dependencies.Paths.AimbotDtc.Parent = nil
 				Dependencies.Paths.SendReport.Parent = nil
 			else
+				Dependencies.Paths.AimbotDtc.Parent = ReplicatedStorage.Remotes
 				Dependencies.Paths.SendReport.Parent = ReplicatedStorage.Modules.Knit.Services.NetworkService.RF
 			end
 		end
